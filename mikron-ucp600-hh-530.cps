@@ -2528,7 +2528,18 @@ writeBlock(mFormat.format(36));
 writeBlock(mFormat.format(35));
     return;
   case COMMAND_BREAK_CONTROL:
-writeBlock("CALL PGM TNC:\BLUM\\BLUM586");
+    //prepare machine to control, turn off coolant, stop spindle and retract z axis
+    setCoolant(COOLANT_OFF);
+    onCommand(COMMAND_STOP_SPINDLE);
+    writeRetract(Z);
+    // move A and B axis to 0 using CYCL 19
+    writeBlock("CYCL DEF 19.0 WORKING PLANE")
+    writeBlock("CYCL DEF 19.1 A+0 C+0")
+    writeBlock("L A+Q120 C+Q122 R0 FMAX")
+    // change machine parameter, to deactivate tilting - prevent 3D ROT error
+    writeBlock("FN 17: SYSWRITE ID210 NR6 = 0")
+    // call blum probe program saved in TNC
+    writeBlock("CALL PGM TNC:\BLUM\\BLUM586");
     return;
   case COMMAND_TOOL_MEASURE:
     return;
