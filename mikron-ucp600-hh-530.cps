@@ -20,7 +20,8 @@ minimumRevision = 24000;
 longDescription = "5-axis post for MIKRON with a Heidenhain control.";
 
 extension = "h";
-if (getCodePage() == 932) { // shift-jis is not supported
+if (getCodePage() == 932) {
+  // shift-jis is not supported
   setCodePage("ascii");
 } else {
   setCodePage("ansi"); // setCodePage("utf-8");
@@ -36,8 +37,6 @@ minimumCircularSweep = toRad(0.01);
 maximumCircularSweep = toRad(5400); // 15 revolutions
 allowHelicalMoves = true;
 allowedCircularPlanes = undefined; // allow any circular motion
-
-
 
 // user-defined properties
 properties = {
@@ -60,47 +59,141 @@ properties = {
   useParametricFeed: true, // specifies that feed should be output using Q values
   showNotes: true, // specifies that operation notes should be output.
   preferTilt: -1, // -1: negative, 0:dont care, 1: positive
-  homeXYBetweenOperations: false // specifies to do a full retract in Z, X and Y for each operation
+  homeXYBetweenOperations: false, // specifies to do a full retract in Z, X and Y for each operation
 };
 
 // user-defined property definitions
 propertyDefinitions = {
-  writeMachine: {title:"Write machine", description:"Output the machine settings in the header of the code.", group:0, type:"boolean"},
-  writeTools: {title:"Write tool list", description:"Output a tool list in the header of the code.", group:0, type:"boolean"},
-  writeVersion: {title:"Write version", description:"Write the version number in the header of the code.", group:0, type:"boolean"},
-  usePlane: {title:"Use plane", description:"If true, planes are used instead of cycle 19.", type:"boolean"},
-  useFunctionTCPM: {title:"Use function TCPM", description:"Specifies whether to use Function TCPM instead of M128/M129.", type:"boolean"},
-  preloadTool: {title:"Preload tool", description:"Preloads the next tool at a tool change (if any).", type:"boolean"},
-  expandCycles: {title:"Expand cycles", description:"If enabled, unhandled cycles are expanded.", type:"boolean"},
-  smoothingTolerance: {title:"Smoothing tolerance", description:"Smoothing tolerance (-1 for disabled).", type:"number"},
-  optionalStop: {title:"Optional stop", description:"Outputs optional stop code during when necessary in the code.", type:"boolean"},
-  structureComments: {title:"Structure comments", description:"Shows structure comments.", type:"boolean"},
-  useM92: {title:"Use M92", description:"If enabled, M91 is used instead of M91.", type:"boolean"},
-  useM140: {title:"Use M140", description:"Specifies to use M140 MB MAX for Z-axis retracts instead of M91/M92 positions.", type:"boolean"},
-  useSubroutines: {title:"Use subroutines", description:"Specifies that subroutines per each operation should be generated.", type:"boolean"},
-  useSubroutinePatterns: {title:"Use subroutine patterns", description:"Generates subroutines for patterned operation.", type:"boolean"},
-  useSubroutineCycles: {title:"Use subroutine cycles", description:"Generates subroutines for cycle operations on same holes.", type:"boolean"},
-  machineDefinition: {title:"Machine definition", description:"Specifies the file path of the machine definition to use.", type:"file", filters:"*.machine|Machine Configuration"},
-  useParametricFeed:  {title:"Parametric feed", description:"Specifies the feed value that should be output using a Q value.", type:"boolean"},
-  showNotes: {title:"Show notes", description:"Writes operation notes as comments in the outputted code.", type:"boolean"},
-  preferTilt: {title:"Prefer tilt", description:"Specifies which tilt direction is preferred.", type:"integer", values:[{id:-1, title:"Negative"}, {id:0, title:"Either"}, {id:1, title:"Positive"}]},
-  homeXYBetweenOperations: {title:"Home XY between operations", description:"Specifies to do a full retract in Z, X and Y for each operation.", type:"boolean"}
+  writeMachine: {
+    title: "Write machine",
+    description: "Output the machine settings in the header of the code.",
+    group: 0,
+    type: "boolean",
+  },
+  writeTools: {
+    title: "Write tool list",
+    description: "Output a tool list in the header of the code.",
+    group: 0,
+    type: "boolean",
+  },
+  writeVersion: {
+    title: "Write version",
+    description: "Write the version number in the header of the code.",
+    group: 0,
+    type: "boolean",
+  },
+  usePlane: {
+    title: "Use plane",
+    description: "If true, planes are used instead of cycle 19.",
+    type: "boolean",
+  },
+  useFunctionTCPM: {
+    title: "Use function TCPM",
+    description: "Specifies whether to use Function TCPM instead of M128/M129.",
+    type: "boolean",
+  },
+  preloadTool: {
+    title: "Preload tool",
+    description: "Preloads the next tool at a tool change (if any).",
+    type: "boolean",
+  },
+  expandCycles: {
+    title: "Expand cycles",
+    description: "If enabled, unhandled cycles are expanded.",
+    type: "boolean",
+  },
+  smoothingTolerance: {
+    title: "Smoothing tolerance",
+    description: "Smoothing tolerance (-1 for disabled).",
+    type: "number",
+  },
+  optionalStop: {
+    title: "Optional stop",
+    description:
+      "Outputs optional stop code during when necessary in the code.",
+    type: "boolean",
+  },
+  structureComments: {
+    title: "Structure comments",
+    description: "Shows structure comments.",
+    type: "boolean",
+  },
+  useM92: {
+    title: "Use M92",
+    description: "If enabled, M91 is used instead of M91.",
+    type: "boolean",
+  },
+  useM140: {
+    title: "Use M140",
+    description:
+      "Specifies to use M140 MB MAX for Z-axis retracts instead of M91/M92 positions.",
+    type: "boolean",
+  },
+  useSubroutines: {
+    title: "Use subroutines",
+    description:
+      "Specifies that subroutines per each operation should be generated.",
+    type: "boolean",
+  },
+  useSubroutinePatterns: {
+    title: "Use subroutine patterns",
+    description: "Generates subroutines for patterned operation.",
+    type: "boolean",
+  },
+  useSubroutineCycles: {
+    title: "Use subroutine cycles",
+    description: "Generates subroutines for cycle operations on same holes.",
+    type: "boolean",
+  },
+  machineDefinition: {
+    title: "Machine definition",
+    description: "Specifies the file path of the machine definition to use.",
+    type: "file",
+    filters: "*.machine|Machine Configuration",
+  },
+  useParametricFeed: {
+    title: "Parametric feed",
+    description:
+      "Specifies the feed value that should be output using a Q value.",
+    type: "boolean",
+  },
+  showNotes: {
+    title: "Show notes",
+    description: "Writes operation notes as comments in the outputted code.",
+    type: "boolean",
+  },
+  preferTilt: {
+    title: "Prefer tilt",
+    description: "Specifies which tilt direction is preferred.",
+    type: "integer",
+    values: [
+      { id: -1, title: "Negative" },
+      { id: 0, title: "Either" },
+      { id: 1, title: "Positive" },
+    ],
+  },
+  homeXYBetweenOperations: {
+    title: "Home XY between operations",
+    description:
+      "Specifies to do a full retract in Z, X and Y for each operation.",
+    type: "boolean",
+  },
 };
 
 // samples:
 // throughTool: {on: 88, off: 89}
 // throughTool: {on: [8, 88], off: [9, 89]}
 var coolants = {
-  flood: {on: 8, off: 9},
+  flood: { on: 8, off: 9 },
   mist: {},
-  throughTool: {on:51, off:52},
-  air: {on:7, off:9},
-  airThroughTool: {on:12, off:9},
-  suction: {on: 10, off: 11},
+  throughTool: { on: 51, off: 52 },
+  air: { on: 7, off: 9 },
+  airThroughTool: { on: 12, off: 9 },
+  suction: { on: 10, off: 11 },
   // floodMist: flood on M8, air on M7, air suction on M10, flood off M9
-  floodMist: {on: [8, 7, 10], off: 9},
+  floodMist: { on: [8, 7, 10], off: 9 },
   floodThroughTool: {},
-  off: 9
+  off: 9,
 };
 
 // fixed settings
@@ -138,38 +231,54 @@ var retracted = false; // specifies that the tool has been retracted to the safe
 
 var radiusCompensationTable = new Table(
   [" R0", " RL", " RR"],
-  {initial:RADIUS_COMPENSATION_OFF},
+  { initial: RADIUS_COMPENSATION_OFF },
   "Invalid radius compensation"
 );
 
-var xyzFormat = createFormat({decimals:(unit == MM ? 3 : 4), forceSign:true});
-var abcFormat = createFormat({decimals:3, forceSign:true, scale:DEG});
+var xyzFormat = createFormat({ decimals: unit == MM ? 3 : 4, forceSign: true });
+var abcFormat = createFormat({ decimals: 3, forceSign: true, scale: DEG });
 // var cFormat = createFormat({decimals:3, forceSign:true, scale:DEG, cyclicLimit:2*Math.PI, cyclicSign:1});
-var feedFormat = createFormat({decimals:(unit == MM ? 0 : 2), scale:(unit == MM ? 1 : 10)});
-var txyzFormat = createFormat({decimals:(unit == MM ? 7 : 8), forceSign:true});
-var rpmFormat = createFormat({decimals:0});
-var secFormat = createFormat({decimals:3});
-var paFormat = createFormat({decimals:3, forceSign:true, scale:DEG});
-var angleFormat = createFormat({decimals:0, scale:DEG});
-var pitchFormat = createFormat({decimals:(unit == MM ? 3 : 4), forceSign:true});
-var ratioFormat = createFormat({decimals:3});
-var mFormat = createFormat({prefix:"M", decimals:0});
+var feedFormat = createFormat({
+  decimals: unit == MM ? 0 : 2,
+  scale: unit == MM ? 1 : 10,
+});
+var txyzFormat = createFormat({
+  decimals: unit == MM ? 7 : 8,
+  forceSign: true,
+});
+var rpmFormat = createFormat({ decimals: 0 });
+var secFormat = createFormat({ decimals: 3 });
+var paFormat = createFormat({ decimals: 3, forceSign: true, scale: DEG });
+var angleFormat = createFormat({ decimals: 0, scale: DEG });
+var pitchFormat = createFormat({
+  decimals: unit == MM ? 3 : 4,
+  forceSign: true,
+});
+var ratioFormat = createFormat({ decimals: 3 });
+var mFormat = createFormat({ prefix: "M", decimals: 0 });
 
 // presentation formats
-var spatialFormat = createFormat({decimals:(unit == MM ? 3 : 4)});
+var spatialFormat = createFormat({ decimals: unit == MM ? 3 : 4 });
 var taperFormat = angleFormat; // share format
 
-var xOutput = createVariable({prefix:" X"}, xyzFormat);
-var yOutput = createVariable({prefix:" Y"}, xyzFormat);
-var zOutput = createVariable({onchange:function () {retracted = false;}, prefix: " Z"}, xyzFormat);
-var txOutput = createVariable({prefix:" TX", force:true}, txyzFormat);
-var tyOutput = createVariable({prefix:" TY", force:true}, txyzFormat);
-var tzOutput = createVariable({prefix:" TZ", force:true}, txyzFormat);
-var aOutput = createVariable({prefix:" A"}, abcFormat);
-var bOutput = createVariable({prefix:" B"}, abcFormat);
-var cOutput = createVariable({prefix:" C"}, abcFormat);
-var feedOutput = createVariable({prefix:" F"}, feedFormat);
-
+var xOutput = createVariable({ prefix: " X" }, xyzFormat);
+var yOutput = createVariable({ prefix: " Y" }, xyzFormat);
+var zOutput = createVariable(
+  {
+    onchange: function () {
+      retracted = false;
+    },
+    prefix: " Z",
+  },
+  xyzFormat
+);
+var txOutput = createVariable({ prefix: " TX", force: true }, txyzFormat);
+var tyOutput = createVariable({ prefix: " TY", force: true }, txyzFormat);
+var tzOutput = createVariable({ prefix: " TZ", force: true }, txyzFormat);
+var aOutput = createVariable({ prefix: " A" }, abcFormat);
+var bOutput = createVariable({ prefix: " B" }, abcFormat);
+var cOutput = createVariable({ prefix: " C" }, abcFormat);
+var feedOutput = createVariable({ prefix: " F" }, feedFormat);
 
 /** Force output of X, Y, and Z. */
 function forceXYZ() {
@@ -240,9 +349,10 @@ function printData(text) {
 }
 
 function onOpen() {
-
   if (properties.machineDefinition) {
-    machineConfiguration = MachineConfiguration.createFromPath(findFile(properties.machineDefinition));
+    machineConfiguration = MachineConfiguration.createFromPath(
+      findFile(properties.machineDefinition)
+    );
     log("");
     log("Machine configuration:");
     log(getMachineConfigurationAsText(machineConfiguration));
@@ -250,16 +360,28 @@ function onOpen() {
     optimizeMachineAngles2(0); // using M128 mode
   } else if (true) {
     // NOTE: setup your machine here
-    var aAxis = createAxis({coordinate:0, table:true, axis:[1, 0, 0], range:[-115.0001, 115.0001], preference: properties.preferTilt});
+    var aAxis = createAxis({
+      coordinate: 0,
+      table: true,
+      axis: [1, 0, 0],
+      range: [-115.0001, 115.0001],
+      preference: properties.preferTilt,
+    });
     //var bAxis = createAxis({coordinate:1, table:true, axis:[0, 1, 0], range:[-120.0001, 120.0001], preference:1});
-    var cAxis = createAxis({coordinate:2, table:true, axis:[0, 0, 1], range:[0, 360], cyclic:true});
+    var cAxis = createAxis({
+      coordinate: 2,
+      table: true,
+      axis: [0, 0, 1],
+      range: [0, 360],
+      cyclic: true,
+    });
     machineConfiguration = new MachineConfiguration(aAxis, cAxis);
 
     setMachineConfiguration(machineConfiguration);
     optimizeMachineAngles2(0); // using M128 mode
   }
 
-/*
+  /*
   // NOTE: setup your home positions here
   machineConfiguration.setRetractPlane(-20.415); // home position Z
   machineConfiguration.setHomePositionX(-200); // home position X
@@ -275,28 +397,45 @@ function onOpen() {
   if (!machineConfiguration.isMachineCoordinate(2)) {
     cOutput.disable();
   }
-  
+
   writeBlock(
-    "BEGIN PGM" + (programName ? (SP + programName) : "") + ((unit == MM) ? " MM" : " INCH")
+    "BEGIN PGM" +
+      (programName ? SP + programName : "") +
+      (unit == MM ? " MM" : " INCH")
   );
   if (programComment) {
     writeComment(programComment);
   }
 
-  { // stock - workpiece
+  {
+    // stock - workpiece
     var workpiece = getWorkpiece();
     var delta = Vector.diff(workpiece.upper, workpiece.lower);
     if (delta.isNonZero()) {
-      writeBlock("BLK FORM 0.1 Z X" + xyzFormat.format(workpiece.lower.x) + " Y" + xyzFormat.format(workpiece.lower.y) + " Z" + xyzFormat.format(workpiece.lower.z));
-      writeBlock("BLK FORM 0.2 X" + xyzFormat.format(workpiece.upper.x) + " Y" + xyzFormat.format(workpiece.upper.y) + " Z" + xyzFormat.format(workpiece.upper.z));
+      writeBlock(
+        "BLK FORM 0.1 Z X" +
+          xyzFormat.format(workpiece.lower.x) +
+          " Y" +
+          xyzFormat.format(workpiece.lower.y) +
+          " Z" +
+          xyzFormat.format(workpiece.lower.z)
+      );
+      writeBlock(
+        "BLK FORM 0.2 X" +
+          xyzFormat.format(workpiece.upper.x) +
+          " Y" +
+          xyzFormat.format(workpiece.upper.y) +
+          " Z" +
+          xyzFormat.format(workpiece.upper.z)
+      );
     }
   }
 
   if (properties.writeVersion) {
-    if ((typeof getHeaderVersion == "function") && getHeaderVersion()) {
+    if (typeof getHeaderVersion == "function" && getHeaderVersion()) {
       writeComment(localize("post version") + ": " + getHeaderVersion());
     }
-    if ((typeof getHeaderDate == "function") && getHeaderDate()) {
+    if (typeof getHeaderDate == "function" && getHeaderDate()) {
       writeComment(localize("post modified") + ": " + getHeaderDate());
     }
   }
@@ -316,7 +455,7 @@ function onOpen() {
       writeComment("  " + localize("model") + ": " + model);
     }
     if (description) {
-      writeComment("  " + localize("description") + ": "  + description);
+      writeComment("  " + localize("description") + ": " + description);
     }
     writeSeparator();
     writeComment("");
@@ -345,14 +484,37 @@ function onOpen() {
       writeComment(localize("Tools"));
       for (var i = 0; i < tools.getNumberOfTools(); ++i) {
         var tool = tools.getTool(i);
-        var comment = "  #" + tool.number + " " +
-          localize("D") + "=" + spatialFormat.format(tool.diameter) +
-          conditional(tool.cornerRadius > 0, " " + localize("CR") + "=" + spatialFormat.format(tool.cornerRadius)) +
-          conditional((tool.taperAngle > 0) && (tool.taperAngle < Math.PI), " " + localize("TAPER") + "=" + taperFormat.format(tool.taperAngle) + localize("deg"));
-          // conditional(tool.tipAngle > 0, " " + localize("TIP:") + "=" + taperFormat.format(tool.tipAngle) + localize("deg"));
+        var comment =
+          "  #" +
+          tool.number +
+          " " +
+          localize("D") +
+          "=" +
+          spatialFormat.format(tool.diameter) +
+          conditional(
+            tool.cornerRadius > 0,
+            " " + localize("CR") + "=" + spatialFormat.format(tool.cornerRadius)
+          ) +
+          conditional(
+            tool.taperAngle > 0 && tool.taperAngle < Math.PI,
+            " " +
+              localize("TAPER") +
+              "=" +
+              taperFormat.format(tool.taperAngle) +
+              localize("deg")
+          );
+        // conditional(tool.tipAngle > 0, " " + localize("TIP:") + "=" + taperFormat.format(tool.tipAngle) + localize("deg"));
         if (zRanges[tool.number]) {
-          comment += " - " + localize("ZMIN") + "=" + xyzFormat.format(zRanges[tool.number].getMinimum());
-          comment += " - " + localize("ZMAX") + "=" + xyzFormat.format(zRanges[tool.number].getMaximum());
+          comment +=
+            " - " +
+            localize("ZMIN") +
+            "=" +
+            xyzFormat.format(zRanges[tool.number].getMinimum());
+          comment +=
+            " - " +
+            localize("ZMAX") +
+            "=" +
+            xyzFormat.format(zRanges[tool.number].getMaximum());
         }
         comment += " - " + getToolTypeName(tool.type);
         writeComment(comment);
@@ -429,16 +591,16 @@ function setTolerance(tolerance) {
 function getSEQ() {
   var SEQ = "";
   switch (properties.preferTilt) {
-  case -1:
-    SEQ = " SEQ-";
-    break;
-  case 0:
-    break;
-  case 1:
-    SEQ = " SEQ+";
-    break;
-  default:
-    error(localize("Invalid tilt preference."));
+    case -1:
+      SEQ = " SEQ-";
+      break;
+    case 0:
+      break;
+    case 1:
+      SEQ = " SEQ+";
+      break;
+    default:
+      error(localize("Invalid tilt preference."));
   }
   return SEQ;
 }
@@ -465,19 +627,30 @@ function forceWorkPlane() {
 
 function defineWorkPlane(_section, _setWorkPlane) {
   var abc = new Vector(0, 0, 0);
-  if (forceMultiAxisIndexing || !is3D() || machineConfiguration.isMultiAxisConfiguration()) { // use 5-axis indexing for multi-axis mode
+  if (
+    forceMultiAxisIndexing ||
+    !is3D() ||
+    machineConfiguration.isMultiAxisConfiguration()
+  ) {
+    // use 5-axis indexing for multi-axis mode
     if (_section.isMultiAxis()) {
       forceWorkPlane();
       cancelTransformation();
     } else {
       if (properties.usePlane) {
         if (_section.isZOriented()) {
-          abc = new Vector(0, 0, -Math.atan2(_section.workPlane.right.y, _section.workPlane.right.x));
+          abc = new Vector(
+            0,
+            0,
+            -Math.atan2(_section.workPlane.right.y, _section.workPlane.right.x)
+          );
         } else {
           // alternatively use Euler API
           abc = _section.workPlane.getTurnAndTilt(0, 2);
         }
-        var remaining = Matrix.getXYZRotation(abc).getTransposed().multiply(_section.workPlane);
+        var remaining = Matrix.getXYZRotation(abc)
+          .getTransposed()
+          .multiply(_section.workPlane);
         setRotation(remaining);
       } else {
         if (machineConfiguration.isMultiAxisConfiguration()) {
@@ -492,7 +665,8 @@ function defineWorkPlane(_section, _setWorkPlane) {
         setWorkPlane(abc, true, false); // turn
       }
     }
-  } else { // pure 3D
+  } else {
+    // pure 3D
     var remaining = _section.workPlane;
     if (!isSameDirection(remaining.forward, new Vector(0, 0, 1))) {
       error(localize("Tool orientation is not supported."));
@@ -504,15 +678,23 @@ function defineWorkPlane(_section, _setWorkPlane) {
 }
 
 function setWorkPlane(abc, turn, isPrepositioned) {
-  if (!forceMultiAxisIndexing && is3D() && !machineConfiguration.isMultiAxisConfiguration()) {
+  if (
+    !forceMultiAxisIndexing &&
+    is3D() &&
+    !machineConfiguration.isMultiAxisConfiguration()
+  ) {
     return; // ignore
   }
 
-  if (!((currentWorkPlaneABC == undefined) ||
-        abcFormat.areDifferent(abc.x, currentWorkPlaneABC.x) ||
-        abcFormat.areDifferent(abc.y, currentWorkPlaneABC.y) ||
-        abcFormat.areDifferent(abc.z, currentWorkPlaneABC.z) ||
-        (!currentWorkPlaneABCTurned && turn))) {
+  if (
+    !(
+      currentWorkPlaneABC == undefined ||
+      abcFormat.areDifferent(abc.x, currentWorkPlaneABC.x) ||
+      abcFormat.areDifferent(abc.y, currentWorkPlaneABC.y) ||
+      abcFormat.areDifferent(abc.z, currentWorkPlaneABC.z) ||
+      (!currentWorkPlaneABCTurned && turn)
+    )
+  ) {
     return; // no change
   }
   currentWorkPlaneABC = abc;
@@ -532,7 +714,15 @@ function setWorkPlane(abc, turn, isPrepositioned) {
     var TURN = turn ? " TURN FMAX" : " STAY"; // alternatively slow down with F9999
     if (abc.isNonZero()) {
       writeBlock(
-        "PLANE SPATIAL SPA" + abcFormat.format(abc.x) + " SPB" + abcFormat.format(abc.y) + " SPC" + abcFormat.format(abc.z) + TURN + getSEQ() + " TABLE ROT"
+        "PLANE SPATIAL SPA" +
+          abcFormat.format(abc.x) +
+          " SPB" +
+          abcFormat.format(abc.y) +
+          " SPC" +
+          abcFormat.format(abc.z) +
+          TURN +
+          getSEQ() +
+          " TABLE ROT"
       );
       /*
       var W = currentSection.workPlane; // map to global frame
@@ -550,21 +740,37 @@ function setWorkPlane(abc, turn, isPrepositioned) {
     if (machineConfiguration.isMultiAxisConfiguration()) {
       writeBlock(
         "CYCL DEF 19.1" +
-        conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(abc.x)) +
-        conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(abc.y)) +
-        conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(abc.z))
+          conditional(
+            machineConfiguration.isMachineCoordinate(0),
+            " A" + abcFormat.format(abc.x)
+          ) +
+          conditional(
+            machineConfiguration.isMachineCoordinate(1),
+            " B" + abcFormat.format(abc.y)
+          ) +
+          conditional(
+            machineConfiguration.isMachineCoordinate(2),
+            " C" + abcFormat.format(abc.z)
+          )
       );
     } else {
-      writeBlock("CYCL DEF 19.1 A" + abcFormat.format(abc.x) + " B" + abcFormat.format(abc.y) + " C" + abcFormat.format(abc.z));
+      writeBlock(
+        "CYCL DEF 19.1 A" +
+          abcFormat.format(abc.x) +
+          " B" +
+          abcFormat.format(abc.y) +
+          " C" +
+          abcFormat.format(abc.z)
+      );
     }
     if (turn) {
       if (machineConfiguration.isMultiAxisConfiguration()) {
         writeBlock(
           "L" +
-          (machineConfiguration.isMachineCoordinate(0) ? " A+Q120" : "") +
-          (machineConfiguration.isMachineCoordinate(1) ? " B+Q121" : "") +
-          (machineConfiguration.isMachineCoordinate(2) ? " C+Q122" : "") +
-          " R0 FMAX"
+            (machineConfiguration.isMachineCoordinate(0) ? " A+Q120" : "") +
+            (machineConfiguration.isMachineCoordinate(1) ? " B+Q121" : "") +
+            (machineConfiguration.isMachineCoordinate(2) ? " C+Q122" : "") +
+            " R0 FMAX"
         );
       }
     }
@@ -586,7 +792,7 @@ function getWorkPlaneMachineABC(workPlane, _setWorkPlane) {
   } else {
     abc = machineConfiguration.getPreferredABC(abc);
   }
-  
+
   try {
     abc = machineConfiguration.remapABC(abc);
     if (_setWorkPlane) {
@@ -594,27 +800,47 @@ function getWorkPlaneMachineABC(workPlane, _setWorkPlane) {
     }
   } catch (e) {
     error(
-      localize("Machine angles not supported") + ":"
-      + conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(abc.x))
-      + conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(abc.y))
-      + conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(abc.z))
+      localize("Machine angles not supported") +
+        ":" +
+        conditional(
+          machineConfiguration.isMachineCoordinate(0),
+          " A" + abcFormat.format(abc.x)
+        ) +
+        conditional(
+          machineConfiguration.isMachineCoordinate(1),
+          " B" + abcFormat.format(abc.y)
+        ) +
+        conditional(
+          machineConfiguration.isMachineCoordinate(2),
+          " C" + abcFormat.format(abc.z)
+        )
     );
   }
-  
+
   var direction = machineConfiguration.getDirection(abc);
   if (!isSameDirection(direction, W.forward)) {
     error(localize("Orientation not supported."));
   }
-  
+
   if (!machineConfiguration.isABCSupported(abc)) {
     error(
-      localize("Work plane is not supported") + ":"
-      + conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(abc.x))
-      + conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(abc.y))
-      + conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(abc.z))
+      localize("Work plane is not supported") +
+        ":" +
+        conditional(
+          machineConfiguration.isMachineCoordinate(0),
+          " A" + abcFormat.format(abc.x)
+        ) +
+        conditional(
+          machineConfiguration.isMachineCoordinate(1),
+          " B" + abcFormat.format(abc.y)
+        ) +
+        conditional(
+          machineConfiguration.isMachineCoordinate(2),
+          " C" + abcFormat.format(abc.z)
+        )
     );
   }
-  
+
   var tcp = false; // keep false for CYCL 19
   if (tcp) {
     setRotation(W); // TCP mode
@@ -623,7 +849,7 @@ function getWorkPlaneMachineABC(workPlane, _setWorkPlane) {
     var R = machineConfiguration.getRemainingOrientation(abc, W);
     setRotation(R);
   }
-  
+
   return abc;
 }
 
@@ -655,12 +881,21 @@ function getFeed(f) {
 function initializeActiveFeeds() {
   activeMovements = new Array();
   var movements = currentSection.getMovements();
-  
+
   var id = 0;
   var activeFeeds = new Array();
   if (hasParameter("operation:tool_feedCutting")) {
-    if (movements & ((1 << MOVEMENT_CUTTING) | (1 << MOVEMENT_LINK_TRANSITION) | (1 << MOVEMENT_EXTENDED))) {
-      var feedContext = new FeedContext(id, localize("Cutting"), getParameter("operation:tool_feedCutting"));
+    if (
+      movements &
+      ((1 << MOVEMENT_CUTTING) |
+        (1 << MOVEMENT_LINK_TRANSITION) |
+        (1 << MOVEMENT_EXTENDED))
+    ) {
+      var feedContext = new FeedContext(
+        id,
+        localize("Cutting"),
+        getParameter("operation:tool_feedCutting")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_CUTTING] = feedContext;
       activeMovements[MOVEMENT_LINK_TRANSITION] = feedContext;
@@ -668,32 +903,48 @@ function initializeActiveFeeds() {
     }
     ++id;
     if (movements & (1 << MOVEMENT_PREDRILL)) {
-      feedContext = new FeedContext(id, localize("Predrilling"), getParameter("operation:tool_feedCutting"));
+      feedContext = new FeedContext(
+        id,
+        localize("Predrilling"),
+        getParameter("operation:tool_feedCutting")
+      );
       activeMovements[MOVEMENT_PREDRILL] = feedContext;
       activeFeeds.push(feedContext);
     }
     ++id;
   }
-  
+
   if (hasParameter("operation:finishFeedrate")) {
     if (movements & (1 << MOVEMENT_FINISH_CUTTING)) {
-      var feedContext = new FeedContext(id, localize("Finish"), getParameter("operation:finishFeedrate"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Finish"),
+        getParameter("operation:finishFeedrate")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_FINISH_CUTTING] = feedContext;
     }
     ++id;
   } else if (hasParameter("operation:tool_feedCutting")) {
     if (movements & (1 << MOVEMENT_FINISH_CUTTING)) {
-      var feedContext = new FeedContext(id, localize("Finish"), getParameter("operation:tool_feedCutting"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Finish"),
+        getParameter("operation:tool_feedCutting")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_FINISH_CUTTING] = feedContext;
     }
     ++id;
   }
-  
+
   if (hasParameter("operation:tool_feedEntry")) {
     if (movements & (1 << MOVEMENT_LEAD_IN)) {
-      var feedContext = new FeedContext(id, localize("Entry"), getParameter("operation:tool_feedEntry"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Entry"),
+        getParameter("operation:tool_feedEntry")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_LEAD_IN] = feedContext;
     }
@@ -702,7 +953,11 @@ function initializeActiveFeeds() {
 
   if (hasParameter("operation:tool_feedExit")) {
     if (movements & (1 << MOVEMENT_LEAD_OUT)) {
-      var feedContext = new FeedContext(id, localize("Exit"), getParameter("operation:tool_feedExit"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Exit"),
+        getParameter("operation:tool_feedExit")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_LEAD_OUT] = feedContext;
     }
@@ -711,25 +966,43 @@ function initializeActiveFeeds() {
 
   if (hasParameter("operation:noEngagementFeedrate")) {
     if (movements & (1 << MOVEMENT_LINK_DIRECT)) {
-      var feedContext = new FeedContext(id, localize("Direct"), getParameter("operation:noEngagementFeedrate"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Direct"),
+        getParameter("operation:noEngagementFeedrate")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_LINK_DIRECT] = feedContext;
     }
     ++id;
-  } else if (hasParameter("operation:tool_feedCutting") &&
-             hasParameter("operation:tool_feedEntry") &&
-             hasParameter("operation:tool_feedExit")) {
+  } else if (
+    hasParameter("operation:tool_feedCutting") &&
+    hasParameter("operation:tool_feedEntry") &&
+    hasParameter("operation:tool_feedExit")
+  ) {
     if (movements & (1 << MOVEMENT_LINK_DIRECT)) {
-      var feedContext = new FeedContext(id, localize("Direct"), Math.max(getParameter("operation:tool_feedCutting"), getParameter("operation:tool_feedEntry"), getParameter("operation:tool_feedExit")));
+      var feedContext = new FeedContext(
+        id,
+        localize("Direct"),
+        Math.max(
+          getParameter("operation:tool_feedCutting"),
+          getParameter("operation:tool_feedEntry"),
+          getParameter("operation:tool_feedExit")
+        )
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_LINK_DIRECT] = feedContext;
     }
     ++id;
   }
-  
+
   if (hasParameter("operation:reducedFeedrate")) {
     if (movements & (1 << MOVEMENT_REDUCED)) {
-      var feedContext = new FeedContext(id, localize("Reduced"), getParameter("operation:reducedFeedrate"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Reduced"),
+        getParameter("operation:reducedFeedrate")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_REDUCED] = feedContext;
     }
@@ -737,8 +1010,18 @@ function initializeActiveFeeds() {
   }
 
   if (hasParameter("operation:tool_feedRamp")) {
-    if (movements & ((1 << MOVEMENT_RAMP) | (1 << MOVEMENT_RAMP_HELIX) | (1 << MOVEMENT_RAMP_PROFILE) | (1 << MOVEMENT_RAMP_ZIG_ZAG))) {
-      var feedContext = new FeedContext(id, localize("Ramping"), getParameter("operation:tool_feedRamp"));
+    if (
+      movements &
+      ((1 << MOVEMENT_RAMP) |
+        (1 << MOVEMENT_RAMP_HELIX) |
+        (1 << MOVEMENT_RAMP_PROFILE) |
+        (1 << MOVEMENT_RAMP_ZIG_ZAG))
+    ) {
+      var feedContext = new FeedContext(
+        id,
+        localize("Ramping"),
+        getParameter("operation:tool_feedRamp")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_RAMP] = feedContext;
       activeMovements[MOVEMENT_RAMP_HELIX] = feedContext;
@@ -749,49 +1032,85 @@ function initializeActiveFeeds() {
   }
   if (hasParameter("operation:tool_feedPlunge")) {
     if (movements & (1 << MOVEMENT_PLUNGE)) {
-      var feedContext = new FeedContext(id, localize("Plunge"), getParameter("operation:tool_feedPlunge"));
+      var feedContext = new FeedContext(
+        id,
+        localize("Plunge"),
+        getParameter("operation:tool_feedPlunge")
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_PLUNGE] = feedContext;
     }
     ++id;
   }
-  if (true) { // high feed
+  if (true) {
+    // high feed
     if (movements & (1 << MOVEMENT_HIGH_FEED)) {
-      var feedContext = new FeedContext(id, localize("High Feed"), this.highFeedrate);
+      var feedContext = new FeedContext(
+        id,
+        localize("High Feed"),
+        this.highFeedrate
+      );
       activeFeeds.push(feedContext);
       activeMovements[MOVEMENT_HIGH_FEED] = feedContext;
     }
     ++id;
   }
-  
+
   for (var i = 0; i < activeFeeds.length; ++i) {
     var feedContext = activeFeeds[i];
-    writeBlock("FN0: Q" + (50 + feedContext.id) + "=" + feedFormat.format(feedContext.feed) + " ; " + feedContext.description);
+    writeBlock(
+      "FN0: Q" +
+        (50 + feedContext.id) +
+        "=" +
+        feedFormat.format(feedContext.feed) +
+        " ; " +
+        feedContext.description
+    );
   }
 }
 
 /** Returns true if the spatial vectors are significantly different. */
 function areSpatialVectorsDifferent(_vector1, _vector2) {
-  return (xyzFormat.getResultingValue(_vector1.x) != xyzFormat.getResultingValue(_vector2.x)) ||
-    (xyzFormat.getResultingValue(_vector1.y) != xyzFormat.getResultingValue(_vector2.y)) ||
-    (xyzFormat.getResultingValue(_vector1.z) != xyzFormat.getResultingValue(_vector2.z));
+  return (
+    xyzFormat.getResultingValue(_vector1.x) !=
+      xyzFormat.getResultingValue(_vector2.x) ||
+    xyzFormat.getResultingValue(_vector1.y) !=
+      xyzFormat.getResultingValue(_vector2.y) ||
+    xyzFormat.getResultingValue(_vector1.z) !=
+      xyzFormat.getResultingValue(_vector2.z)
+  );
 }
 
 /** Returns true if the spatial boxes are a pure translation. */
 function areSpatialBoxesTranslated(_box1, _box2) {
-  return !areSpatialVectorsDifferent(Vector.diff(_box1[1], _box1[0]), Vector.diff(_box2[1], _box2[0])) &&
-    !areSpatialVectorsDifferent(Vector.diff(_box2[0], _box1[0]), Vector.diff(_box2[1], _box1[1]));
+  return (
+    !areSpatialVectorsDifferent(
+      Vector.diff(_box1[1], _box1[0]),
+      Vector.diff(_box2[1], _box2[0])
+    ) &&
+    !areSpatialVectorsDifferent(
+      Vector.diff(_box2[0], _box1[0]),
+      Vector.diff(_box2[1], _box1[1])
+    )
+  );
 }
 
 function subprogramDefine(_initialPosition, _abc, _retracted, _zIsOutput) {
   // convert patterns into subprograms
   var usePattern = false;
   patternIsActive = false;
-  if (currentSection.isPatterned && currentSection.isPatterned() && properties.useSubroutinePatterns) {
+  if (
+    currentSection.isPatterned &&
+    currentSection.isPatterned() &&
+    properties.useSubroutinePatterns
+  ) {
     currentPattern = currentSection.getPatternId();
     firstPattern = true;
     for (var i = 0; i < definedPatterns.length; ++i) {
-      if ((definedPatterns[i].patternType == SUB_PATTERN) && (currentPattern == definedPatterns[i].patternId)) {
+      if (
+        definedPatterns[i].patternType == SUB_PATTERN &&
+        currentPattern == definedPatterns[i].patternId
+      ) {
         currentSubprogram = definedPatterns[i].subProgram;
         usePattern = definedPatterns[i].validPattern;
         firstPattern = false;
@@ -801,7 +1120,11 @@ function subprogramDefine(_initialPosition, _abc, _retracted, _zIsOutput) {
 
     if (firstPattern) {
       // determine if this is a valid pattern for creating a subprogram
-      usePattern = subprogramIsValid(currentSection, currentPattern, SUB_PATTERN);
+      usePattern = subprogramIsValid(
+        currentSection,
+        currentPattern,
+        SUB_PATTERN
+      );
       if (usePattern) {
         currentSubprogram = nextLabel++;
       }
@@ -811,7 +1134,7 @@ function subprogramDefine(_initialPosition, _abc, _retracted, _zIsOutput) {
         subProgram: currentSubprogram,
         validPattern: usePattern,
         initialPosition: _initialPosition,
-        finalPosition: _initialPosition
+        finalPosition: _initialPosition,
       });
     }
 
@@ -834,15 +1157,29 @@ function subprogramDefine(_initialPosition, _abc, _retracted, _zIsOutput) {
   }
 
   // Output cycle operation as subprogram
-  if (!usePattern && properties.useSubroutineCycles && currentSection.doesStrictCycle &&
-      (currentSection.getNumberOfCycles() == 1) && currentSection.getNumberOfCyclePoints() >= minimumCyclePoints) {
+  if (
+    !usePattern &&
+    properties.useSubroutineCycles &&
+    currentSection.doesStrictCycle &&
+    currentSection.getNumberOfCycles() == 1 &&
+    currentSection.getNumberOfCyclePoints() >= minimumCyclePoints
+  ) {
     var finalPosition = getFramePosition(currentSection.getFinalPosition());
     currentPattern = currentSection.getNumberOfCyclePoints();
     firstPattern = true;
     for (var i = 0; i < definedPatterns.length; ++i) {
-      if ((definedPatterns[i].patternType == SUB_CYCLE) && (currentPattern == definedPatterns[i].patternId) &&
-          !areSpatialVectorsDifferent(_initialPosition, definedPatterns[i].initialPosition) &&
-          !areSpatialVectorsDifferent(finalPosition, definedPatterns[i].finalPosition)) {
+      if (
+        definedPatterns[i].patternType == SUB_CYCLE &&
+        currentPattern == definedPatterns[i].patternId &&
+        !areSpatialVectorsDifferent(
+          _initialPosition,
+          definedPatterns[i].initialPosition
+        ) &&
+        !areSpatialVectorsDifferent(
+          finalPosition,
+          definedPatterns[i].finalPosition
+        )
+      ) {
         currentSubprogram = definedPatterns[i].subProgram;
         usePattern = definedPatterns[i].validPattern;
         firstPattern = false;
@@ -862,7 +1199,7 @@ function subprogramDefine(_initialPosition, _abc, _retracted, _zIsOutput) {
         subProgram: currentSubprogram,
         validPattern: usePattern,
         initialPosition: _initialPosition,
-        finalPosition: finalPosition
+        finalPosition: finalPosition,
       });
     }
     cycleSubprogramIsActive = usePattern;
@@ -884,8 +1221,12 @@ function subprogramStart(_initialPosition, _abc, _incremental) {
     comment = getParameter("operation-comment");
   }
   writeln(
-    "LBL " + currentSubprogram +
-    conditional(comment, formatComment(comment.substr(0, maximumLineLength - 2 - 6 - 1)))
+    "LBL " +
+      currentSubprogram +
+      conditional(
+        comment,
+        formatComment(comment.substr(0, maximumLineLength - 2 - 6 - 1))
+      )
   );
   saveShowSequenceNumbers = properties.showSequenceNumbers;
   properties.showSequenceNumbers = false;
@@ -936,18 +1277,27 @@ function subprogramIsValid(_section, _patternId, _patternType) {
           patternBox[0] = getFramePosition(tempBox[0]);
           patternBox[1] = getFramePosition(tempBox[1]);
 
-          if (!areSpatialBoxesTranslated(masterPosition, patternPosition) || !areSpatialBoxesTranslated(masterBox, patternBox)) {
+          if (
+            !areSpatialBoxesTranslated(masterPosition, patternPosition) ||
+            !areSpatialBoxesTranslated(masterBox, patternBox)
+          ) {
             validSubprogram = false;
             break;
           }
         }
 
-      // check for valid cycle operation
+        // check for valid cycle operation
       } else if (_patternType == SUB_CYCLE) {
-        if ((section.getNumberOfCyclePoints() == _patternId) && (section.getNumberOfCycles() == 1)) {
+        if (
+          section.getNumberOfCyclePoints() == _patternId &&
+          section.getNumberOfCycles() == 1
+        ) {
           var patternInitial = getFramePosition(section.getInitialPosition());
           var patternFinal = getFramePosition(section.getFinalPosition());
-          if (!areSpatialVectorsDifferent(patternInitial, masterPosition[0]) && !areSpatialVectorsDifferent(patternFinal, masterPosition[1])) {
+          if (
+            !areSpatialVectorsDifferent(patternInitial, masterPosition[0]) &&
+            !areSpatialVectorsDifferent(patternFinal, masterPosition[1])
+          ) {
             validSubprogram = true;
             break;
           }
@@ -957,12 +1307,14 @@ function subprogramIsValid(_section, _patternId, _patternType) {
   }
   setRotation(rotation);
   setTranslation(translation);
-  return(validSubprogram);
+  return validSubprogram;
 }
 
 function setAxisMode(_format, _output, _prefix, _value, _incr) {
   var i = _output.isEnabled();
-  _output = _incr ? createIncrementalVariable({prefix: _prefix}, _format) : createVariable({prefix: _prefix}, _format);
+  _output = _incr
+    ? createIncrementalVariable({ prefix: _prefix }, _format)
+    : createVariable({ prefix: _prefix }, _format);
   _output.format(_value);
   _output.format(_value);
   i = i ? _output.enable() : _output.disable();
@@ -995,31 +1347,53 @@ function onSection() {
   var forceToolAndRetract = optionalSection && !currentSection.isOptional();
   optionalSection = currentSection.isOptional();
 
-  var insertToolCall = forceToolAndRetract || isFirstSection() ||
-    (tool.number != getPreviousSection().getTool().number) ||
-    (rpmFormat.areDifferent(spindleSpeed, getPreviousSection().getInitialSpindleSpeed ? getPreviousSection().getInitialSpindleSpeed() : getPreviousSection().getTool().spindleRPM)) ||
-    (tool.clockwise != getPreviousSection().getTool().clockwise);
+  var insertToolCall =
+    forceToolAndRetract ||
+    isFirstSection() ||
+    tool.number != getPreviousSection().getTool().number ||
+    rpmFormat.areDifferent(
+      spindleSpeed,
+      getPreviousSection().getInitialSpindleSpeed
+        ? getPreviousSection().getInitialSpindleSpeed()
+        : getPreviousSection().getTool().spindleRPM
+    ) ||
+    tool.clockwise != getPreviousSection().getTool().clockwise;
   retracted = false; // specifies that the tool has been retracted to the safe plane
   var zIsOutput = false; // true if the Z-position has been output, used for patterns
 
-  var newWorkOffset = isFirstSection() ||
-    (getPreviousSection().workOffset != currentSection.workOffset); // work offset changes
-  var newWorkPlane = isFirstSection() ||
-    !isSameDirection(getPreviousSection().getGlobalFinalToolAxis(), currentSection.getGlobalInitialToolAxis()) ||
-    (currentSection.isOptimizedForMachine() && getPreviousSection().isOptimizedForMachine() &&
-    Vector.diff(getPreviousSection().getFinalToolAxisABC(), currentSection.getInitialToolAxisABC()).length > 1e-4) ||
-    (!machineConfiguration.isMultiAxisConfiguration() && currentSection.isMultiAxis()) ||
-    (!getPreviousSection().isMultiAxis() && currentSection.isMultiAxis() ||
-      getPreviousSection().isMultiAxis() && !currentSection.isMultiAxis()); // force newWorkPlane between indexing and simultaneous operations
+  var newWorkOffset =
+    isFirstSection() ||
+    getPreviousSection().workOffset != currentSection.workOffset; // work offset changes
+  var newWorkPlane =
+    isFirstSection() ||
+    !isSameDirection(
+      getPreviousSection().getGlobalFinalToolAxis(),
+      currentSection.getGlobalInitialToolAxis()
+    ) ||
+    (currentSection.isOptimizedForMachine() &&
+      getPreviousSection().isOptimizedForMachine() &&
+      Vector.diff(
+        getPreviousSection().getFinalToolAxisABC(),
+        currentSection.getInitialToolAxisABC()
+      ).length > 1e-4) ||
+    (!machineConfiguration.isMultiAxisConfiguration() &&
+      currentSection.isMultiAxis()) ||
+    (!getPreviousSection().isMultiAxis() && currentSection.isMultiAxis()) ||
+    (getPreviousSection().isMultiAxis() && !currentSection.isMultiAxis()); // force newWorkPlane between indexing and simultaneous operations
   var fullRetract = insertToolCall || newWorkPlane;
 
   if (insertToolCall) {
     setCoolant(COOLANT_OFF);
   }
-  
-  if (insertToolCall || newWorkOffset || newWorkPlane) {
 
-    if ((forceMultiAxisIndexing || !is3D() || machineConfiguration.isMultiAxisConfiguration()) && newWorkPlane) { // reset working plane
+  if (insertToolCall || newWorkOffset || newWorkPlane) {
+    if (
+      (forceMultiAxisIndexing ||
+        !is3D() ||
+        machineConfiguration.isMultiAxisConfiguration()) &&
+      newWorkPlane
+    ) {
+      // reset working plane
       onCommand(COMMAND_UNLOCK_MULTI_AXIS);
       if (properties.usePlane) {
         writeBlock("PLANE RESET STAY");
@@ -1028,19 +1402,36 @@ function onSection() {
         if (machineConfiguration.isMultiAxisConfiguration()) {
           writeBlock(
             "CYCL DEF 19.1" +
-            conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(0)) +
-            conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(0)) +
-            conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(0))
+              conditional(
+                machineConfiguration.isMachineCoordinate(0),
+                " A" + abcFormat.format(0)
+              ) +
+              conditional(
+                machineConfiguration.isMachineCoordinate(1),
+                " B" + abcFormat.format(0)
+              ) +
+              conditional(
+                machineConfiguration.isMachineCoordinate(2),
+                " C" + abcFormat.format(0)
+              )
           );
         } else {
-          writeBlock("CYCL DEF 19.1 A" + abcFormat.format(0) + " B" + abcFormat.format(0) + " C" + abcFormat.format(0));
+          writeBlock(
+            "CYCL DEF 19.1 A" +
+              abcFormat.format(0) +
+              " B" +
+              abcFormat.format(0) +
+              " C" +
+              abcFormat.format(0)
+          );
         }
       }
       forceWorkPlane();
     }
 
     // retract to safe plane
-    if (!properties.useM140 || !isFirstSection()) { // cannot use M140 here since no tool is called yet which specifies the tool axis for M140
+    if (!properties.useM140 || !isFirstSection()) {
+      // cannot use M140 here since no tool is called yet which specifies the tool axis for M140
       writeRetract(Z);
     }
 
@@ -1050,7 +1441,8 @@ function onSection() {
     }
   }
 
-  if (properties.homeXYBetweenOperations) { // force XY Z retracts
+  if (properties.homeXYBetweenOperations) {
+    // force XY Z retracts
     if (!retracted) {
       writeRetract(Z);
     }
@@ -1060,7 +1452,10 @@ function onSection() {
 
   if (hasParameter("operation-comment")) {
     var comment = getParameter("operation-comment");
-    if (comment && ((comment !== lastOperationComment) || !patternIsActive || insertToolCall)) {
+    if (
+      comment &&
+      (comment !== lastOperationComment || !patternIsActive || insertToolCall)
+    ) {
       writeStructureComment(comment);
       lastOperationComment = comment;
     }
@@ -1080,10 +1475,10 @@ function onSection() {
       }
     }
   }
-  
+
   if (insertToolCall) {
     forceWorkPlane();
-  
+
     onCommand(COMMAND_STOP_SPINDLE);
 
     if (!isFirstSection() && properties.optionalStop) {
@@ -1091,30 +1486,32 @@ function onSection() {
       onCommand(COMMAND_OPTIONAL_STOP);
     }
 
+    // commented to prevent breakage control of each tool
+    //    if (!isFirstSection()) {
+    //      onCommand(COMMAND_BREAK_CONTROL);
+    //    }
 
-// commented to prevent breakage control of each tool
-//    if (!isFirstSection()) {
-//      onCommand(COMMAND_BREAK_CONTROL);
-//    }
+    //     if (false) {
+    //       var zRange = currentSection.getGlobalZRange();
+    //       var numberOfSections = getNumberOfSections();
+    //       for (var i = getCurrentSectionId() + 1; i < numberOfSections; ++i) {
+    //         var section = getSection(i);
+    //         var _tool = section.getTool();
+    //         if (_tool.number != tool.number) {
+    //           break;
+    //         }
+    //         zRange.expandToRange(section.getGlobalZRange());
+    //       }
 
-
-//     if (false) {
-//       var zRange = currentSection.getGlobalZRange();
-//       var numberOfSections = getNumberOfSections();
-//       for (var i = getCurrentSectionId() + 1; i < numberOfSections; ++i) {
-//         var section = getSection(i);
-//         var _tool = section.getTool();
-//         if (_tool.number != tool.number) {
-//           break;
-//         }
-//         zRange.expandToRange(section.getGlobalZRange());
-//       }
-
-//       writeStructureComment("T" + tool.number + "-D" + spatialFormat.format(tool.diameter) + "-CR:" + spatialFormat.format(tool.cornerRadius) + "-ZMIN:" + spatialFormat.format(zRange.getMinimum()) + "-ZMAX:" + spatialFormat.format(zRange.getMaximum()));
-//     }
+    //       writeStructureComment("T" + tool.number + "-D" + spatialFormat.format(tool.diameter) + "-CR:" + spatialFormat.format(tool.cornerRadius) + "-ZMIN:" + spatialFormat.format(zRange.getMinimum()) + "-ZMAX:" + spatialFormat.format(zRange.getMaximum()));
+    //     }
 
     writeBlock(
-      "TOOL CALL " + tool.number + SP + getSpindleAxisLetter(machineConfiguration.getSpindleAxis()) + conditional(!isProbeOperation(), " S" + rpmFormat.format(spindleSpeed))
+      "TOOL CALL " +
+        tool.number +
+        SP +
+        getSpindleAxisLetter(machineConfiguration.getSpindleAxis()) +
+        conditional(!isProbeOperation(), " S" + rpmFormat.format(spindleSpeed))
     );
     if (tool.comment) {
       writeComment(tool.comment);
@@ -1135,7 +1532,6 @@ function onSection() {
         }
       }
     }
-    
 
     if (fullRetract) {
       writeRetract(Z);
@@ -1153,11 +1549,15 @@ function onSection() {
       writeBlock(mFormat.format(126)); // shortest path traverse
     }
   }
-  
+
   if (!isProbeOperation()) {
-    onCommand(tool.clockwise ? COMMAND_SPINDLE_CLOCKWISE : COMMAND_SPINDLE_COUNTERCLOCKWISE);
+    onCommand(
+      tool.clockwise
+        ? COMMAND_SPINDLE_CLOCKWISE
+        : COMMAND_SPINDLE_COUNTERCLOCKWISE
+    );
   }
-  
+
   setWCS();
   var abc = defineWorkPlane(currentSection, true);
 
@@ -1166,7 +1566,7 @@ function onSection() {
   }
 
   invalidate();
-  
+
   if (currentSection.isMultiAxis()) {
     cancelTransformation();
     var abc;
@@ -1174,17 +1574,19 @@ function onSection() {
       abc = currentSection.getInitialToolAxisABC();
       writeBlock(
         "L" +
-        aOutput.format(abc.x) +
-        bOutput.format(abc.y) +
-        cOutput.format(abc.z) +
-        " R0 FMAX"
+          aOutput.format(abc.x) +
+          bOutput.format(abc.y) +
+          cOutput.format(abc.z) +
+          " R0 FMAX"
       );
     } else {
       // plane vector set below
     }
 
     // global position
-    var initialPosition = getFramePosition(getGlobalPosition(currentSection.getInitialPosition()));
+    var initialPosition = getFramePosition(
+      getGlobalPosition(currentSection.getInitialPosition())
+    );
 
     // global position
     forceXYZ();
@@ -1196,7 +1598,13 @@ function onSection() {
     if (properties.usePlane) {
       if (machineConfiguration.isMultiAxisConfiguration()) {
         writeBlock(
-          "PLANE SPATIAL SPA" + abcFormat.format(abc.x % (Math.PI *2)) + " SPB" + abcFormat.format(abc.y % (Math.PI *2)) + " SPC" + abcFormat.format(abc.z % (Math.PI *2)) + " STAY"
+          "PLANE SPATIAL SPA" +
+            abcFormat.format(abc.x % (Math.PI * 2)) +
+            " SPB" +
+            abcFormat.format(abc.y % (Math.PI * 2)) +
+            " SPC" +
+            abcFormat.format(abc.z % (Math.PI * 2)) +
+            " STAY"
         );
       } else {
         // x/y axes do not matter as long as we only move to X0 Y0 below
@@ -1210,12 +1618,23 @@ function onSection() {
           var imX = Vector.cross(new Vector(0, 1, 0), forward).getNormalized();
           W = new Matrix(imX, Vector.cross(forward, imX), forward); // make sure this is orthogonal
         }
-        
+
         var TURN = true ? " TURN FMAX" : " STAY"; // alternatively slow down with F9999
         writeBlock(
           "PLANE VECTOR" +
-          " BX" + txyzFormat.format(W.right.x) + " BY" + txyzFormat.format(W.right.y) + " BZ" + txyzFormat.format(W.right.z) +
-          " NX" + txyzFormat.format(W.forward.x) + " NY" + txyzFormat.format(W.forward.y) + " NZ" + txyzFormat.format(W.forward.z) + TURN
+            " BX" +
+            txyzFormat.format(W.right.x) +
+            " BY" +
+            txyzFormat.format(W.right.y) +
+            " BZ" +
+            txyzFormat.format(W.right.z) +
+            " NX" +
+            txyzFormat.format(W.forward.x) +
+            " NY" +
+            txyzFormat.format(W.forward.y) +
+            " NZ" +
+            txyzFormat.format(W.forward.z) +
+            TURN
         );
       }
     } else {
@@ -1223,17 +1642,40 @@ function onSection() {
       if (machineConfiguration.isMultiAxisConfiguration()) {
         writeBlock(
           "CYCL DEF 19.1" +
-          conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(abc.x % (Math.PI *2))) +
-          conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(abc.y % (Math.PI *2))) +
-          conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(abc.z % (Math.PI *2)))
+            conditional(
+              machineConfiguration.isMachineCoordinate(0),
+              " A" + abcFormat.format(abc.x % (Math.PI * 2))
+            ) +
+            conditional(
+              machineConfiguration.isMachineCoordinate(1),
+              " B" + abcFormat.format(abc.y % (Math.PI * 2))
+            ) +
+            conditional(
+              machineConfiguration.isMachineCoordinate(2),
+              " C" + abcFormat.format(abc.z % (Math.PI * 2))
+            )
         );
       } else {
-        error(localize("CYCL DEF 19 is not allowed without a machine configuration (enable the 'usePlane' setting)."));
-        writeBlock("CYCL DEF 19.1 A" + abcFormat.format(abc.x) + " B" + abcFormat.format(abc.y) + " C" + abcFormat.format(abc.z));
+        error(
+          localize(
+            "CYCL DEF 19 is not allowed without a machine configuration (enable the 'usePlane' setting)."
+          )
+        );
+        writeBlock(
+          "CYCL DEF 19.1 A" +
+            abcFormat.format(abc.x) +
+            " B" +
+            abcFormat.format(abc.y) +
+            " C" +
+            abcFormat.format(abc.z)
+        );
       }
     }
 
-    if ((machineConfiguration.isHeadConfiguration() || useTCPPositioning) && properties.usePlane) {
+    if (
+      (machineConfiguration.isHeadConfiguration() || useTCPPositioning) &&
+      properties.usePlane
+    ) {
       setWorkPlane(new Vector(0, 0, 0), false, false); // reset working plane
       setTCP(true);
     }
@@ -1254,19 +1696,38 @@ function onSection() {
       if (machineConfiguration.isMultiAxisConfiguration()) {
         writeBlock(
           "CYCL DEF 19.1" +
-          conditional(machineConfiguration.isMachineCoordinate(0), " A" + abcFormat.format(0)) +
-          conditional(machineConfiguration.isMachineCoordinate(1), " B" + abcFormat.format(0)) +
-          conditional(machineConfiguration.isMachineCoordinate(2), " C" + abcFormat.format(0))
+            conditional(
+              machineConfiguration.isMachineCoordinate(0),
+              " A" + abcFormat.format(0)
+            ) +
+            conditional(
+              machineConfiguration.isMachineCoordinate(1),
+              " B" + abcFormat.format(0)
+            ) +
+            conditional(
+              machineConfiguration.isMachineCoordinate(2),
+              " C" + abcFormat.format(0)
+            )
         );
       } else {
-        writeBlock("CYCL DEF 19.1 A" + abcFormat.format(0) + " B" + abcFormat.format(0) + " C" + abcFormat.format(0));
+        writeBlock(
+          "CYCL DEF 19.1 A" +
+            abcFormat.format(0) +
+            " B" +
+            abcFormat.format(0) +
+            " C" +
+            abcFormat.format(0)
+        );
       }
       setTCP(true);
     }
     forceXYZ();
-  } else { // indexing
+  } else {
+    // indexing
     var initialPosition = getFramePosition(currentSection.getInitialPosition());
-    var globalInitialPosition = getGlobalPosition(currentSection.getInitialPosition());
+    var globalInitialPosition = getGlobalPosition(
+      currentSection.getInitialPosition()
+    );
 
     if (!retracted && !insertToolCall) {
       if (getCurrentPosition().z < initialPosition.z) {
@@ -1274,12 +1735,21 @@ function onSection() {
         zIsOutput = true;
       }
     }
-    if ((machineConfiguration.isHeadConfiguration() || useTCPPositioning) && properties.usePlane) { // enable to use prepositioning with TCP, recommended for head/head or head/table kinematics
+    if (
+      (machineConfiguration.isHeadConfiguration() || useTCPPositioning) &&
+      properties.usePlane
+    ) {
+      // enable to use prepositioning with TCP, recommended for head/head or head/table kinematics
       if (abc.isNonZero()) {
         setWorkPlane(new Vector(0, 0, 0), false, false); // reset working plane
         setTCP(true);
       }
-      writeBlock("L" + xOutput.format(globalInitialPosition.x) + yOutput.format(globalInitialPosition.y) + " R0 FMAX");
+      writeBlock(
+        "L" +
+          xOutput.format(globalInitialPosition.x) +
+          yOutput.format(globalInitialPosition.y) +
+          " R0 FMAX"
+      );
       writeBlock("L" + zOutput.format(globalInitialPosition.z) + " R0 FMAX");
       if (abc.isNonZero()) {
         setTCP(false);
@@ -1287,18 +1757,29 @@ function onSection() {
       }
     } else {
       if (!machineConfiguration.isHeadConfiguration()) {
-        writeBlock("L" + xOutput.format(initialPosition.x) + yOutput.format(initialPosition.y) + " R0 FMAX");
+        writeBlock(
+          "L" +
+            xOutput.format(initialPosition.x) +
+            yOutput.format(initialPosition.y) +
+            " R0 FMAX"
+        );
         z = zOutput.format(initialPosition.z);
         if (z) {
           writeBlock("L" + z + " R0 FMAX");
         }
       } else {
-        writeBlock("L" + xOutput.format(initialPosition.x) + yOutput.format(initialPosition.y) + zOutput.format(initialPosition.z) + " R0 FMAX");
+        writeBlock(
+          "L" +
+            xOutput.format(initialPosition.x) +
+            yOutput.format(initialPosition.y) +
+            zOutput.format(initialPosition.z) +
+            " R0 FMAX"
+        );
       }
     }
     zIsOutput = true;
   }
-  
+
   // set coolant after we have positioned at Z
   if (insertToolCall) {
     forceCoolant();
@@ -1308,22 +1789,38 @@ function onSection() {
   if (forceToolAndRetract) {
     currentTolerance = undefined;
   }
-  if (hasParameter("operation-strategy") && (getParameter("operation-strategy") == "drill")) {
+  if (
+    hasParameter("operation-strategy") &&
+    getParameter("operation-strategy") == "drill"
+  ) {
     setTolerance(0);
   } else if (hasParameter("operation:tolerance")) {
-    setTolerance(Math.max(Math.min(getParameter("operation:tolerance"), properties.smoothingTolerance), 0));
+    setTolerance(
+      Math.max(
+        Math.min(
+          getParameter("operation:tolerance"),
+          properties.smoothingTolerance
+        ),
+        0
+      )
+    );
   } else {
     setTolerance(0);
   }
-  
-  if (properties.useParametricFeed &&
-      hasParameter("operation-strategy") &&
-      (getParameter("operation-strategy") != "drill") && // legacy
-      !(currentSection.hasAnyCycle && currentSection.hasAnyCycle())) {
-    if (!insertToolCall &&
-        activeMovements &&
-        (getCurrentSectionId() > 0) &&
-        ((getPreviousSection().getPatternId() == currentSection.getPatternId()) && (currentSection.getPatternId() != 0))) {
+
+  if (
+    properties.useParametricFeed &&
+    hasParameter("operation-strategy") &&
+    getParameter("operation-strategy") != "drill" && // legacy
+    !(currentSection.hasAnyCycle && currentSection.hasAnyCycle())
+  ) {
+    if (
+      !insertToolCall &&
+      activeMovements &&
+      getCurrentSectionId() > 0 &&
+      getPreviousSection().getPatternId() == currentSection.getPatternId() &&
+      currentSection.getPatternId() != 0
+    ) {
       // use the current feeds
     } else {
       initializeActiveFeeds();
@@ -1342,8 +1839,8 @@ function setTCP(tcp) {
     if (properties.useFunctionTCPM) {
       writeBlock("FUNCTION TCPM F TCP AXIS POS PATHCTRL AXIS");
     } else {
-	  writeBlock("CYCL DEF 19.0 WORKING PLANE");
-	  writeBlock("CYCL DEF 19.1");
+      writeBlock("CYCL DEF 19.0 WORKING PLANE");
+      writeBlock("CYCL DEF 19.1");
       writeBlock(mFormat.format(128));
     }
   } else {
@@ -1364,14 +1861,22 @@ function setWCS() {
     // datum shift after tool call
     if (useCycl247) {
       if (workOffsetLabels[currentSection.workOffset]) {
-        writeBlock("CALL LBL " + workOffsetLabels[currentSection.workOffset] + " ;DATUM");
+        writeBlock(
+          "CALL LBL " + workOffsetLabels[currentSection.workOffset] + " ;DATUM"
+        );
       } else {
         workOffsetLabels[currentSection.workOffset] = nextLabel;
         writeBlock("LBL " + nextLabel);
         ++nextLabel;
         writeBlock(
-          "CYCL DEF 247 " + localize("DATUM SETTING") + " ~" + EOL +
-          "  Q339=" + currentSection.workOffset + " ; " + localize("DATUM NUMBER")
+          "CYCL DEF 247 " +
+            localize("DATUM SETTING") +
+            " ~" +
+            EOL +
+            "  Q339=" +
+            currentSection.workOffset +
+            " ; " +
+            localize("DATUM NUMBER")
         );
         writeBlock("LBL 0");
       }
@@ -1380,7 +1885,10 @@ function setWCS() {
       writeBlock("CYCL DEF 7.1 #" + currentSection.workOffset);
     }
   } else {
-    warningOnce(localize("Work offset has not been specified."), WARNING_WORK_OFFSET);
+    warningOnce(
+      localize("Work offset has not been specified."),
+      WARNING_WORK_OFFSET
+    );
   }
 }
 
@@ -1392,7 +1900,10 @@ function onDwell(seconds) {
 
 function isProbeOperation() {
   // isProbingCycle && isProbingCycle(cycleType)
-  return hasParameter("operation-strategy") && (getParameter("operation-strategy") == "probe");
+  return (
+    hasParameter("operation-strategy") &&
+    getParameter("operation-strategy") == "probe"
+  );
 }
 
 var probeOutputWorkOffset = 1;
@@ -1408,169 +1919,698 @@ function onParameter(name, value) {
 
 function onSpindleSpeed(spindleSpeed) {
   writeBlock(
-    "TOOL CALL " + getSpindleAxisLetter(machineConfiguration.getSpindleAxis()) + " S" + rpmFormat.format(spindleSpeed)
+    "TOOL CALL " +
+      getSpindleAxisLetter(machineConfiguration.getSpindleAxis()) +
+      " S" +
+      rpmFormat.format(spindleSpeed)
   );
 }
 
 function onDrilling(cycle) {
-  writeBlock("CYCL DEF 200 " + localize("DRILLING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q202=" + xyzFormat.format(cycle.depth) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-    + "  Q210=" + secFormat.format(0) + " ;" + localize("DWELL AT TOP") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q211=" + secFormat.format(0) + " ;" + localize("DWELL AT BOTTOM")
+  writeBlock(
+    "CYCL DEF 200 " +
+      localize("DRILLING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q202=" +
+      xyzFormat.format(cycle.depth) +
+      " ;" +
+      localize("INFEED DEPTH") +
+      " ~" +
+      EOL +
+      "  Q210=" +
+      secFormat.format(0) +
+      " ;" +
+      localize("DWELL AT TOP") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(0) +
+      " ;" +
+      localize("DWELL AT BOTTOM")
   );
 }
 
 function onCounterBoring(cycle) {
-  writeBlock("CYCL DEF 200 " + localize("DRILLING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q202=" + xyzFormat.format(cycle.depth) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-    + "  Q210=" + secFormat.format(0) + " ;" + localize("DWELL AT TOP") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM")
+  writeBlock(
+    "CYCL DEF 200 " +
+      localize("DRILLING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q202=" +
+      xyzFormat.format(cycle.depth) +
+      " ;" +
+      localize("INFEED DEPTH") +
+      " ~" +
+      EOL +
+      "  Q210=" +
+      secFormat.format(0) +
+      " ;" +
+      localize("DWELL AT TOP") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM")
   );
 }
 
 function onChipBreaking(cycle) {
-  writeBlock("CYCL DEF 203 " + localize("UNIVERSAL DRILLING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q202=" + xyzFormat.format(cycle.incrementalDepth) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-    + "  Q210=" + secFormat.format(0) + " ;" + localize("DWELL AT TOP") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q212=" + xyzFormat.format(cycle.incrementalDepthReduction) + " ;" + localize("DECREMENT") + " ~" + EOL
-    + "  Q213=" + cycle.plungesPerRetract + " ;" + localize("BREAKS") + " ~" + EOL
-    + "  Q205=" + xyzFormat.format(cycle.minimumIncrementalDepth) + " ;" + localize("MIN. PLUNGING DEPTH") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL TIME AT DEPTH") + " ~" + EOL
-    + "  Q208=" + "MAX" + " ;" + localize("RETRACTION FEED RATE") + " ~" + EOL
-    + "  Q256=" + xyzFormat.format((cycle.chipBreakDistance != undefined) ? cycle.chipBreakDistance : machineParameters.chipBreakingDistance) + " ;" + localize("DIST. FOR CHIP BRKNG")
+  writeBlock(
+    "CYCL DEF 203 " +
+      localize("UNIVERSAL DRILLING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q202=" +
+      xyzFormat.format(cycle.incrementalDepth) +
+      " ;" +
+      localize("INFEED DEPTH") +
+      " ~" +
+      EOL +
+      "  Q210=" +
+      secFormat.format(0) +
+      " ;" +
+      localize("DWELL AT TOP") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q212=" +
+      xyzFormat.format(cycle.incrementalDepthReduction) +
+      " ;" +
+      localize("DECREMENT") +
+      " ~" +
+      EOL +
+      "  Q213=" +
+      cycle.plungesPerRetract +
+      " ;" +
+      localize("BREAKS") +
+      " ~" +
+      EOL +
+      "  Q205=" +
+      xyzFormat.format(cycle.minimumIncrementalDepth) +
+      " ;" +
+      localize("MIN. PLUNGING DEPTH") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL TIME AT DEPTH") +
+      " ~" +
+      EOL +
+      "  Q208=" +
+      "MAX" +
+      " ;" +
+      localize("RETRACTION FEED RATE") +
+      " ~" +
+      EOL +
+      "  Q256=" +
+      xyzFormat.format(
+        cycle.chipBreakDistance != undefined
+          ? cycle.chipBreakDistance
+          : machineParameters.chipBreakingDistance
+      ) +
+      " ;" +
+      localize("DIST. FOR CHIP BRKNG")
   );
 }
 
 function onDeepDrilling(cycle) {
   if (useCycl205) {
-    writeBlock("CYCL DEF 205 " + localize("UNIVERSAL PECKING") + " ~" + EOL
-      + " Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-      + " Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-      + " Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-      + " Q202=" + xyzFormat.format(cycle.incrementalDepth) + " ;" + localize("PLUNGING DEPTH") + " ~" + EOL
-      + " Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-      + " Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-      + " Q212=" + xyzFormat.format(cycle.incrementalDepthReduction) + " ;" + localize("DECREMENT") + " ~" + EOL
-      + " Q205=" + xyzFormat.format(cycle.minimumIncrementalDepth) + " ;" + localize("MIN. PLUNGING DEPTH") + " ~" + EOL
-      + " Q258=" + xyzFormat.format(0.5) + " ;" + localize("UPPER ADV. STOP DIST.") + " ~" + EOL
-      + " Q259=" + xyzFormat.format(1) + " ;" + localize("LOWER ADV. STOP DIST.") + " ~" + EOL
-      + " Q257=" + xyzFormat.format(5) + " ;" + localize("DEPTH FOR CHIP BRKNG") + " ~" + EOL
-      + " Q256=" + xyzFormat.format((cycle.chipBreakDistance != undefined) ? cycle.chipBreakDistance : machineParameters.chipBreakingDistance) + " ;" + localize("DIST. FOR CHIP BRKNG")+ " ~" + EOL
-      + " Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL TIME AT DEPTH") + " ~" + EOL
-      + " Q379=" + "0" + " ;" + localize("STARTING POINT") + " ~" + EOL
-      + " Q253=" + feedFormat.format(cycle.retractFeedrate) + " ;" + localize("F PRE-POSITIONING")
+    writeBlock(
+      "CYCL DEF 205 " +
+        localize("UNIVERSAL PECKING") +
+        " ~" +
+        EOL +
+        " Q200=" +
+        xyzFormat.format(cycle.retract - cycle.stock) +
+        " ;" +
+        localize("SET-UP CLEARANCE") +
+        " ~" +
+        EOL +
+        " Q201=" +
+        xyzFormat.format(-cycle.depth) +
+        " ;" +
+        localize("DEPTH") +
+        " ~" +
+        EOL +
+        " Q206=" +
+        feedFormat.format(cycle.feedrate) +
+        " ;" +
+        localize("FEED RATE FOR PLUNGING") +
+        " ~" +
+        EOL +
+        " Q202=" +
+        xyzFormat.format(cycle.incrementalDepth) +
+        " ;" +
+        localize("PLUNGING DEPTH") +
+        " ~" +
+        EOL +
+        " Q203=" +
+        xyzFormat.format(cycle.stock) +
+        " ;" +
+        localize("SURFACE COORDINATE") +
+        " ~" +
+        EOL +
+        " Q204=" +
+        xyzFormat.format(cycle.clearance - cycle.stock) +
+        " ;" +
+        localize("2ND SET-UP CLEARANCE") +
+        " ~" +
+        EOL +
+        " Q212=" +
+        xyzFormat.format(cycle.incrementalDepthReduction) +
+        " ;" +
+        localize("DECREMENT") +
+        " ~" +
+        EOL +
+        " Q205=" +
+        xyzFormat.format(cycle.minimumIncrementalDepth) +
+        " ;" +
+        localize("MIN. PLUNGING DEPTH") +
+        " ~" +
+        EOL +
+        " Q258=" +
+        xyzFormat.format(0.5) +
+        " ;" +
+        localize("UPPER ADV. STOP DIST.") +
+        " ~" +
+        EOL +
+        " Q259=" +
+        xyzFormat.format(1) +
+        " ;" +
+        localize("LOWER ADV. STOP DIST.") +
+        " ~" +
+        EOL +
+        " Q257=" +
+        xyzFormat.format(5) +
+        " ;" +
+        localize("DEPTH FOR CHIP BRKNG") +
+        " ~" +
+        EOL +
+        " Q256=" +
+        xyzFormat.format(
+          cycle.chipBreakDistance != undefined
+            ? cycle.chipBreakDistance
+            : machineParameters.chipBreakingDistance
+        ) +
+        " ;" +
+        localize("DIST. FOR CHIP BRKNG") +
+        " ~" +
+        EOL +
+        " Q211=" +
+        secFormat.format(cycle.dwell) +
+        " ;" +
+        localize("DWELL TIME AT DEPTH") +
+        " ~" +
+        EOL +
+        " Q379=" +
+        "0" +
+        " ;" +
+        localize("STARTING POINT") +
+        " ~" +
+        EOL +
+        " Q253=" +
+        feedFormat.format(cycle.retractFeedrate) +
+        " ;" +
+        localize("F PRE-POSITIONING")
     );
   } else {
-    writeBlock("CYCL DEF 200 " + localize("DRILLING") + " ~" + EOL
-      + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-      + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-      + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-      + "  Q202=" + xyzFormat.format(cycle.incrementalDepth) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-      + "  Q210=" + secFormat.format(0) + " ;" + localize("DWELL AT TOP") + " ~" + EOL
-      + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-      + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-      + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM")
+    writeBlock(
+      "CYCL DEF 200 " +
+        localize("DRILLING") +
+        " ~" +
+        EOL +
+        "  Q200=" +
+        xyzFormat.format(cycle.retract - cycle.stock) +
+        " ;" +
+        localize("SET-UP CLEARANCE") +
+        " ~" +
+        EOL +
+        "  Q201=" +
+        xyzFormat.format(-cycle.depth) +
+        " ;" +
+        localize("DEPTH") +
+        " ~" +
+        EOL +
+        "  Q206=" +
+        feedFormat.format(cycle.feedrate) +
+        " ;" +
+        localize("FEED RATE FOR PLUNGING") +
+        " ~" +
+        EOL +
+        "  Q202=" +
+        xyzFormat.format(cycle.incrementalDepth) +
+        " ;" +
+        localize("INFEED DEPTH") +
+        " ~" +
+        EOL +
+        "  Q210=" +
+        secFormat.format(0) +
+        " ;" +
+        localize("DWELL AT TOP") +
+        " ~" +
+        EOL +
+        "  Q203=" +
+        xyzFormat.format(cycle.stock) +
+        " ;" +
+        localize("SURFACE COORDINATE") +
+        " ~" +
+        EOL +
+        "  Q204=" +
+        xyzFormat.format(cycle.clearance - cycle.stock) +
+        " ;" +
+        localize("2ND SET-UP CLEARANCE") +
+        " ~" +
+        EOL +
+        "  Q211=" +
+        secFormat.format(cycle.dwell) +
+        " ;" +
+        localize("DWELL AT BOTTOM")
     );
   }
 }
 
 function onGunDrilling(cycle) {
   var coolantCode = getCoolantCode(tool.coolant);
-  writeBlock("CYCL DEF 241 " + localize("SINGLE-FLUTED DEEP-HOLE DRILLING") + " ~" + EOL
-    + " Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + " Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + " Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + " Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL TIME AT DEPTH") + " ~" + EOL
-    + " Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + " Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + " Q379=" + xyzFormat.format(cycle.startingDepth) + " ;" + localize("STARTING POINT") + " ~" + EOL
-    + " Q253=" + feedFormat.format(cycle.positioningFeedrate) + " ;" + localize("F PRE-POSITIONING") + " ~" + EOL
-    + " Q208=" + feedFormat.format(cycle.retractFeedrate) + " ;" + localize("RETRACT FEED RATE") + " ~" + EOL
-    + " Q426=" + (cycle.stopSpindle ? 5 : (tool.clockwise ? 3 : 4)) + " ;" + localize("DIR. OF SPINDLE ROT.") + " ~" + EOL
-    + " Q427=" + rpmFormat.format(cycle.positioningSpindleSpeed ? cycle.positioningSpindleSpeed : tool.spindleRPM) + " ;" + localize("ENTRY EXIT SPEED") + " ~" + EOL
-    + " Q428=" + rpmFormat.format(tool.spindleRPM) + " ;" + localize("DRILLING SPEED") + " ~" + EOL
-    + conditional(coolantCode, " Q429=" + (coolantCode ? coolantCode[0] : 0) + " ;" + localize("COOLANT ON") + " ~" + EOL)
-    + conditional(coolantCode, " Q430=" + (coolantCode ? coolantCode[1] : 0) + " ;" + localize("COOLANT OFF") + " ~" + EOL)
-    // Heidenhain manual doesn't specify Q435 fully - adjust to fit CNC
-    + " Q435=" + xyzFormat.format(cycle.dwellDepth ? (cycle.depth + cycle.dwellDepth) : 0) + " ;" + localize("DWELL DEPTH") // 0 to disable
+  writeBlock(
+    "CYCL DEF 241 " +
+      localize("SINGLE-FLUTED DEEP-HOLE DRILLING") +
+      " ~" +
+      EOL +
+      " Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      " Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      " Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      " Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL TIME AT DEPTH") +
+      " ~" +
+      EOL +
+      " Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      " Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      " Q379=" +
+      xyzFormat.format(cycle.startingDepth) +
+      " ;" +
+      localize("STARTING POINT") +
+      " ~" +
+      EOL +
+      " Q253=" +
+      feedFormat.format(cycle.positioningFeedrate) +
+      " ;" +
+      localize("F PRE-POSITIONING") +
+      " ~" +
+      EOL +
+      " Q208=" +
+      feedFormat.format(cycle.retractFeedrate) +
+      " ;" +
+      localize("RETRACT FEED RATE") +
+      " ~" +
+      EOL +
+      " Q426=" +
+      (cycle.stopSpindle ? 5 : tool.clockwise ? 3 : 4) +
+      " ;" +
+      localize("DIR. OF SPINDLE ROT.") +
+      " ~" +
+      EOL +
+      " Q427=" +
+      rpmFormat.format(
+        cycle.positioningSpindleSpeed
+          ? cycle.positioningSpindleSpeed
+          : tool.spindleRPM
+      ) +
+      " ;" +
+      localize("ENTRY EXIT SPEED") +
+      " ~" +
+      EOL +
+      " Q428=" +
+      rpmFormat.format(tool.spindleRPM) +
+      " ;" +
+      localize("DRILLING SPEED") +
+      " ~" +
+      EOL +
+      conditional(
+        coolantCode,
+        " Q429=" +
+          (coolantCode ? coolantCode[0] : 0) +
+          " ;" +
+          localize("COOLANT ON") +
+          " ~" +
+          EOL
+      ) +
+      conditional(
+        coolantCode,
+        " Q430=" +
+          (coolantCode ? coolantCode[1] : 0) +
+          " ;" +
+          localize("COOLANT OFF") +
+          " ~" +
+          EOL
+      ) +
+      // Heidenhain manual doesn't specify Q435 fully - adjust to fit CNC
+      " Q435=" +
+      xyzFormat.format(cycle.dwellDepth ? cycle.depth + cycle.dwellDepth : 0) +
+      " ;" +
+      localize("DWELL DEPTH") // 0 to disable
   );
 }
 
 function onTapping(cycle) {
-  writeBlock("CYCL DEF 207 " + localize("RIGID TAPPING NEW") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q239=" + pitchFormat.format((tool.type == TOOL_TAP_LEFT_HAND ? -1 : 1) * tool.threadPitch) + " ;" + localize("THREAD PITCH") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE")
+  writeBlock(
+    "CYCL DEF 207 " +
+      localize("RIGID TAPPING NEW") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q239=" +
+      pitchFormat.format(
+        (tool.type == TOOL_TAP_LEFT_HAND ? -1 : 1) * tool.threadPitch
+      ) +
+      " ;" +
+      localize("THREAD PITCH") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE")
   );
 }
 
 function onTappingWithChipBreaking(cycle) {
-  writeBlock("CYCL DEF 209 " + localize("TAPPING W/ CHIP BRKG") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q239=" + pitchFormat.format((tool.type == TOOL_TAP_LEFT_HAND ? -1 : 1) * tool.threadPitch) + " ;" + localize("THREAD PITCH") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q257=" + xyzFormat.format(cycle.incrementalDepth) + " ;" + localize("DEPTH FOR CHIP BRKNG") + " ~" + EOL
-    + "  Q256=" + xyzFormat.format((cycle.chipBreakDistance != undefined) ? cycle.chipBreakDistance : machineParameters.chipBreakingDistance) + " ;" + localize("DIST. FOR CHIP BRKNG") + " ~" + EOL
-    + "  Q336=" + angleFormat.format(0) + " ;" + localize("ANGLE OF SPINDLE")
+  writeBlock(
+    "CYCL DEF 209 " +
+      localize("TAPPING W/ CHIP BRKG") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q239=" +
+      pitchFormat.format(
+        (tool.type == TOOL_TAP_LEFT_HAND ? -1 : 1) * tool.threadPitch
+      ) +
+      " ;" +
+      localize("THREAD PITCH") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q257=" +
+      xyzFormat.format(cycle.incrementalDepth) +
+      " ;" +
+      localize("DEPTH FOR CHIP BRKNG") +
+      " ~" +
+      EOL +
+      "  Q256=" +
+      xyzFormat.format(
+        cycle.chipBreakDistance != undefined
+          ? cycle.chipBreakDistance
+          : machineParameters.chipBreakingDistance
+      ) +
+      " ;" +
+      localize("DIST. FOR CHIP BRKNG") +
+      " ~" +
+      EOL +
+      "  Q336=" +
+      angleFormat.format(0) +
+      " ;" +
+      localize("ANGLE OF SPINDLE")
   );
 }
 
 function onReaming(cycle) {
-  writeBlock("CYCL DEF 201 " + localize("REAMING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM") + " ~" + EOL
-    + "  Q208=" + feedFormat.format(cycle.retractFeedrate) + " ;" + localize("RETRACTION FEED TIME") + " ~" + EOL // retract at reaming feed rate
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE")
+  writeBlock(
+    "CYCL DEF 201 " +
+      localize("REAMING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM") +
+      " ~" +
+      EOL +
+      "  Q208=" +
+      feedFormat.format(cycle.retractFeedrate) +
+      " ;" +
+      localize("RETRACTION FEED TIME") +
+      " ~" +
+      EOL + // retract at reaming feed rate
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE")
   );
 }
 
 function onStopBoring(cycle) {
-  writeBlock("CYCL DEF 202 " + localize("BORING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM") + " ~" + EOL
-    + "  Q208=" + "MAX" + " ;" + localize("RETRACTION FEED RATE") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q214=" + 0 + " ;" + localize("DISENGAGING DIRECTION") + " ~" + EOL
-    + "  Q336=" + angleFormat.format(0) + " ;" + localize("ANGLE OF SPINDLE")
+  writeBlock(
+    "CYCL DEF 202 " +
+      localize("BORING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM") +
+      " ~" +
+      EOL +
+      "  Q208=" +
+      "MAX" +
+      " ;" +
+      localize("RETRACTION FEED RATE") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q214=" +
+      0 +
+      " ;" +
+      localize("DISENGAGING DIRECTION") +
+      " ~" +
+      EOL +
+      "  Q336=" +
+      angleFormat.format(0) +
+      " ;" +
+      localize("ANGLE OF SPINDLE")
   );
 }
 
 /** Returns the best discrete disengagement direction for the specified direction. */
 function getDisengagementDirection(direction) {
-  switch (getQuadrant(direction + 45 * Math.PI/180)) {
-  case 0:
-    return 3;
-  case 1:
-    return 4;
-  case 2:
-    return 1;
-  case 3:
-    return 2;
+  switch (getQuadrant(direction + (45 * Math.PI) / 180)) {
+    case 0:
+      return 3;
+    case 1:
+      return 4;
+    case 2:
+      return 1;
+    case 3:
+      return 2;
   }
   error(localize("Invalid disengagement direction."));
   return 3;
@@ -1578,106 +2618,438 @@ function getDisengagementDirection(direction) {
 
 function onFineBoring(cycle) {
   // we do not support cycle.shift
-  
-  writeBlock("CYCL DEF 202 " + localize("BORING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM") + " ~" + EOL
-    + "  Q208=" + "MAX" + " ;" + localize("RETRACTION FEED TIME") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q214=" + getDisengagementDirection(cycle.shiftDirection) + " ;" + localize("DISENGAGING DIRECTION") + " ~" + EOL
-    + "  Q336=" + angleFormat.format(cycle.compensatedShiftOrientation) + " ;" + localize("ANGLE OF SPINDLE")
+
+  writeBlock(
+    "CYCL DEF 202 " +
+      localize("BORING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM") +
+      " ~" +
+      EOL +
+      "  Q208=" +
+      "MAX" +
+      " ;" +
+      localize("RETRACTION FEED TIME") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q214=" +
+      getDisengagementDirection(cycle.shiftDirection) +
+      " ;" +
+      localize("DISENGAGING DIRECTION") +
+      " ~" +
+      EOL +
+      "  Q336=" +
+      angleFormat.format(cycle.compensatedShiftOrientation) +
+      " ;" +
+      localize("ANGLE OF SPINDLE")
   );
 }
 
 function onBackBoring(cycle) {
-  writeBlock("CYCL DEF 204 " + localize("BACK BORING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q249=" + xyzFormat.format(cycle.backBoreDistance) + " ;" + localize("DEPTH REDUCTION") + " ~" + EOL
-    + "  Q250=" + xyzFormat.format(cycle.depth) + " ;" + localize("MATERIAL THICKNESS") + " ~" + EOL
-    + "  Q251=" + xyzFormat.format(cycle.shift) + " ;" + localize("OFF-CENTER DISTANCE") + " ~" + EOL
-    + "  Q252=" + xyzFormat.format(0) + " ;" + localize("TOOL EDGE HEIGHT") + " ~" + EOL
-    + "  Q253=" + "MAX" + " ;"+ localize("F PRE-POSITIONING") + " ~" + EOL
-    + "  Q254=" + feedFormat.format(cycle.feedrate) + " ;" + localize("F COUNTERBORING") + " ~" + EOL
-    + "  Q255=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q214=" + getDisengagementDirection(cycle.shiftDirection) + " ;" + localize("DISENGAGING DIRECTION") + " ~" + EOL
-    + "  Q336=" + angleFormat.format(cycle.compensatedShiftOrientation) + " ;" + localize("ANGLE OF SPINDLE")
+  writeBlock(
+    "CYCL DEF 204 " +
+      localize("BACK BORING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q249=" +
+      xyzFormat.format(cycle.backBoreDistance) +
+      " ;" +
+      localize("DEPTH REDUCTION") +
+      " ~" +
+      EOL +
+      "  Q250=" +
+      xyzFormat.format(cycle.depth) +
+      " ;" +
+      localize("MATERIAL THICKNESS") +
+      " ~" +
+      EOL +
+      "  Q251=" +
+      xyzFormat.format(cycle.shift) +
+      " ;" +
+      localize("OFF-CENTER DISTANCE") +
+      " ~" +
+      EOL +
+      "  Q252=" +
+      xyzFormat.format(0) +
+      " ;" +
+      localize("TOOL EDGE HEIGHT") +
+      " ~" +
+      EOL +
+      "  Q253=" +
+      "MAX" +
+      " ;" +
+      localize("F PRE-POSITIONING") +
+      " ~" +
+      EOL +
+      "  Q254=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("F COUNTERBORING") +
+      " ~" +
+      EOL +
+      "  Q255=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q214=" +
+      getDisengagementDirection(cycle.shiftDirection) +
+      " ;" +
+      localize("DISENGAGING DIRECTION") +
+      " ~" +
+      EOL +
+      "  Q336=" +
+      angleFormat.format(cycle.compensatedShiftOrientation) +
+      " ;" +
+      localize("ANGLE OF SPINDLE")
   );
 }
 
 function onBoring(cycle) {
-  writeBlock("CYCL DEF 202 " + localize("BORING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q211=" + secFormat.format(cycle.dwell) + " ;" + localize("DWELL AT BOTTOM") + " ~" + EOL
-    + "  Q208=" + feedFormat.format(cycle.retractFeedrate) + " ;" + localize("RETRACTION FEED RATE") + " ~" + EOL // retract at feed
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q214=" + 0 + " ;" + localize("DISENGAGING DIRECTION") + " ~" + EOL
-    + "  Q336=" + angleFormat.format(0) + " ;" + localize("ANGLE OF SPINDLE")
+  writeBlock(
+    "CYCL DEF 202 " +
+      localize("BORING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q211=" +
+      secFormat.format(cycle.dwell) +
+      " ;" +
+      localize("DWELL AT BOTTOM") +
+      " ~" +
+      EOL +
+      "  Q208=" +
+      feedFormat.format(cycle.retractFeedrate) +
+      " ;" +
+      localize("RETRACTION FEED RATE") +
+      " ~" +
+      EOL + // retract at feed
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q214=" +
+      0 +
+      " ;" +
+      localize("DISENGAGING DIRECTION") +
+      " ~" +
+      EOL +
+      "  Q336=" +
+      angleFormat.format(0) +
+      " ;" +
+      localize("ANGLE OF SPINDLE")
   );
 }
 
 function onBoreMilling(cycle) {
-  writeBlock("CYCL DEF 208 " + localize("BORE MILLING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q334=" + pitchFormat.format(cycle.pitch) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q335=" + xyzFormat.format(cycle.diameter) + " ;" + localize("NOMINAL DIAMETER") + " ~" + EOL
-    + "  Q342=" + xyzFormat.format(tool.diameter) + " ;" + localize("ROUGHING DIAMETER")
+  writeBlock(
+    "CYCL DEF 208 " +
+      localize("BORE MILLING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q334=" +
+      pitchFormat.format(cycle.pitch) +
+      " ;" +
+      localize("INFEED DEPTH") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q335=" +
+      xyzFormat.format(cycle.diameter) +
+      " ;" +
+      localize("NOMINAL DIAMETER") +
+      " ~" +
+      EOL +
+      "  Q342=" +
+      xyzFormat.format(tool.diameter) +
+      " ;" +
+      localize("ROUGHING DIAMETER")
   );
 }
 
 function onThreadMilling(cycle) {
   cycle.numberOfThreads = 1;
-  writeBlock("CYCL DEF 262 " + localize("THREAD MILLING") + " ~" + EOL
-    + "  Q335=" + xyzFormat.format(cycle.diameter) + " ;" + localize("NOMINAL DIAMETER") + " ~" + EOL
-    // + for right-hand and - for left-hand
-    + "  Q239=" + pitchFormat.format(cycle.threading == "right" ? cycle.pitch : -cycle.pitch) + " ;" + localize("PITCH") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("THREAD DEPTH") + " ~" + EOL
-    // 0 for threads over entire depth
-    + "  Q355=" + xyzFormat.format(cycle.numberOfThreads) + " ;" + localize("THREADS PER STEP") + " ~" + EOL
-    + "  Q253=" + feedFormat.format(cycle.feedrate) + " ;" + localize("F PRE-POSITIONING") + " ~" + EOL
-    + "  Q351=" + xyzFormat.format(cycle.direction == "climb" ? 1 : -1) + " ;" + localize("CLIMB OR UP-CUT") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q207=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR MILLING")
+  writeBlock(
+    "CYCL DEF 262 " +
+      localize("THREAD MILLING") +
+      " ~" +
+      EOL +
+      "  Q335=" +
+      xyzFormat.format(cycle.diameter) +
+      " ;" +
+      localize("NOMINAL DIAMETER") +
+      " ~" +
+      EOL +
+      // + for right-hand and - for left-hand
+      "  Q239=" +
+      pitchFormat.format(
+        cycle.threading == "right" ? cycle.pitch : -cycle.pitch
+      ) +
+      " ;" +
+      localize("PITCH") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("THREAD DEPTH") +
+      " ~" +
+      EOL +
+      // 0 for threads over entire depth
+      "  Q355=" +
+      xyzFormat.format(cycle.numberOfThreads) +
+      " ;" +
+      localize("THREADS PER STEP") +
+      " ~" +
+      EOL +
+      "  Q253=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("F PRE-POSITIONING") +
+      " ~" +
+      EOL +
+      "  Q351=" +
+      xyzFormat.format(cycle.direction == "climb" ? 1 : -1) +
+      " ;" +
+      localize("CLIMB OR UP-CUT") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q207=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR MILLING")
   );
 }
 
 function onCircularPocketMilling(cycle) {
   if (tool.taperAngle > 0) {
-    error(localize("Circular pocket milling is not supported for taper tools."));
+    error(
+      localize("Circular pocket milling is not supported for taper tools.")
+    );
     return;
   }
-  
+
   // do NOT use with undercutting - doesnt move to the center before retracting
-  writeBlock("CYCL DEF 252 " + localize("CIRCULAR POCKET") + " ~" + EOL
-    + "  Q215=1 ;" + localize("MACHINE OPERATION") + " ~" + EOL
-    + "  Q223=" + xyzFormat.format(cycle.diameter) + " ;" + localize("CIRCLE DIAMETER") + " ~" + EOL
-    + "  Q368=" + xyzFormat.format(0) + " ;" + localize("FINISHING ALLOWANCE FOR SIDE") + " ~" + EOL
-    + "  Q207=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR MILLING") + " ~" + EOL
-    + "  Q351=" + xyzFormat.format(cycle.direction == "climb" ? 1 : -1) + " ;" + localize("CLIMB OR UP-CUT") + " ~" + EOL
-    + "  Q201=" + xyzFormat.format(-cycle.depth) + " ;" + localize("DEPTH") + " ~" + EOL
-    + "  Q202=" + xyzFormat.format(cycle.incrementalDepth) + " ;" + localize("INFEED DEPTH") + " ~" + EOL
-    + "  Q369=" + xyzFormat.format(0) + " ;" + localize("FINISHING ALLOWANCE FOR FLOOR") + " ~" + EOL
-    + "  Q206=" + feedFormat.format(cycle.plungeFeedrate) + " ;" + localize("FEED RATE FOR PLUNGING") + " ~" + EOL
-    + "  Q338=0 ;" + localize("INFEED FOR FINISHING") + " ~" + EOL
-    + "  Q200=" + xyzFormat.format(cycle.retract - cycle.stock) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q203=" + xyzFormat.format(cycle.stock) + " ;" + localize("SURFACE COORDINATE") + " ~" + EOL
-    + "  Q204=" + xyzFormat.format(cycle.clearance - cycle.stock) + " ;" + localize("2ND SET-UP CLEARANCE") + " ~" + EOL
-    + "  Q370=" + ratioFormat.format(cycle.stepover/(tool.diameter/2)) + " ;" + localize("TOOL PATH OVERLAP") + " ~" + EOL
-    + "  Q366=" + "0" + " ;" + localize("PLUNGING") + " ~" + EOL
-    + "  Q385=" + feedFormat.format(cycle.feedrate) + " ;" + localize("FEED RATE FOR FINISHING")
+  writeBlock(
+    "CYCL DEF 252 " +
+      localize("CIRCULAR POCKET") +
+      " ~" +
+      EOL +
+      "  Q215=1 ;" +
+      localize("MACHINE OPERATION") +
+      " ~" +
+      EOL +
+      "  Q223=" +
+      xyzFormat.format(cycle.diameter) +
+      " ;" +
+      localize("CIRCLE DIAMETER") +
+      " ~" +
+      EOL +
+      "  Q368=" +
+      xyzFormat.format(0) +
+      " ;" +
+      localize("FINISHING ALLOWANCE FOR SIDE") +
+      " ~" +
+      EOL +
+      "  Q207=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR MILLING") +
+      " ~" +
+      EOL +
+      "  Q351=" +
+      xyzFormat.format(cycle.direction == "climb" ? 1 : -1) +
+      " ;" +
+      localize("CLIMB OR UP-CUT") +
+      " ~" +
+      EOL +
+      "  Q201=" +
+      xyzFormat.format(-cycle.depth) +
+      " ;" +
+      localize("DEPTH") +
+      " ~" +
+      EOL +
+      "  Q202=" +
+      xyzFormat.format(cycle.incrementalDepth) +
+      " ;" +
+      localize("INFEED DEPTH") +
+      " ~" +
+      EOL +
+      "  Q369=" +
+      xyzFormat.format(0) +
+      " ;" +
+      localize("FINISHING ALLOWANCE FOR FLOOR") +
+      " ~" +
+      EOL +
+      "  Q206=" +
+      feedFormat.format(cycle.plungeFeedrate) +
+      " ;" +
+      localize("FEED RATE FOR PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q338=0 ;" +
+      localize("INFEED FOR FINISHING") +
+      " ~" +
+      EOL +
+      "  Q200=" +
+      xyzFormat.format(cycle.retract - cycle.stock) +
+      " ;" +
+      localize("SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q203=" +
+      xyzFormat.format(cycle.stock) +
+      " ;" +
+      localize("SURFACE COORDINATE") +
+      " ~" +
+      EOL +
+      "  Q204=" +
+      xyzFormat.format(cycle.clearance - cycle.stock) +
+      " ;" +
+      localize("2ND SET-UP CLEARANCE") +
+      " ~" +
+      EOL +
+      "  Q370=" +
+      ratioFormat.format(cycle.stepover / (tool.diameter / 2)) +
+      " ;" +
+      localize("TOOL PATH OVERLAP") +
+      " ~" +
+      EOL +
+      "  Q366=" +
+      "0" +
+      " ;" +
+      localize("PLUNGING") +
+      " ~" +
+      EOL +
+      "  Q385=" +
+      feedFormat.format(cycle.feedrate) +
+      " ;" +
+      localize("FEED RATE FOR FINISHING")
   );
 }
 
@@ -1699,7 +3071,11 @@ function onCycle() {
     return;
   }
   if (pendingRadiusCompensation >= 0) {
-    error(localize("Radius compensation cannot be activated/deactivated for a circular move."));
+    error(
+      localize(
+        "Radius compensation cannot be activated/deactivated for a circular move."
+      )
+    );
     return;
   }
 
@@ -1707,217 +3083,709 @@ function onCycle() {
 
   if (cycle.clearance != undefined) {
     if (getCurrentPosition().z < cycle.clearance) {
-      writeBlock("L" + zOutput.format(cycle.clearance) + radiusCompensationTable.lookup(radiusCompensation) + " FMAX");
+      writeBlock(
+        "L" +
+          zOutput.format(cycle.clearance) +
+          radiusCompensationTable.lookup(radiusCompensation) +
+          " FMAX"
+      );
       setCurrentPositionZ(cycle.clearance);
     }
   }
 
   switch (cycleType) {
-  case "drilling": // G81 style
-    onDrilling(cycle);
-    break;
-  case "counter-boring":
-    onCounterBoring(cycle);
-    break;
-  case "chip-breaking":
-    onChipBreaking(cycle);
-    break;
-  case "deep-drilling":
-    onDeepDrilling(cycle);
-    break;
-  case "gun-drilling":
-    onGunDrilling(cycle);
-    break;
-  case "tapping":
-  case "left-tapping":
-  case "right-tapping":
-    onTapping(cycle);
-    break;
-  case "tapping-with-chip-breaking":
-  case "left-tapping-with-chip-breaking":
-  case "right-tapping-with-chip-breaking":
-    onTappingWithChipBreaking(cycle);
-    break;
-  case "reaming":
-    onReaming(cycle);
-    break;
-  case "stop-boring":
-    onStopBoring(cycle);
-    break;
-  case "fine-boring":
-    onFineBoring(cycle);
-    break;
-  case "back-boring":
-    onBackBoring(cycle);
-    break;
-  case "boring":
-    onBoring(cycle);
-    break;
-  case "bore-milling":
-    if (cycle.numberOfSteps > 1) {
+    case "drilling": // G81 style
+      onDrilling(cycle);
+      break;
+    case "counter-boring":
+      onCounterBoring(cycle);
+      break;
+    case "chip-breaking":
+      onChipBreaking(cycle);
+      break;
+    case "deep-drilling":
+      onDeepDrilling(cycle);
+      break;
+    case "gun-drilling":
+      onGunDrilling(cycle);
+      break;
+    case "tapping":
+    case "left-tapping":
+    case "right-tapping":
+      onTapping(cycle);
+      break;
+    case "tapping-with-chip-breaking":
+    case "left-tapping-with-chip-breaking":
+    case "right-tapping-with-chip-breaking":
+      onTappingWithChipBreaking(cycle);
+      break;
+    case "reaming":
+      onReaming(cycle);
+      break;
+    case "stop-boring":
+      onStopBoring(cycle);
+      break;
+    case "fine-boring":
+      onFineBoring(cycle);
+      break;
+    case "back-boring":
+      onBackBoring(cycle);
+      break;
+    case "boring":
+      onBoring(cycle);
+      break;
+    case "bore-milling":
+      if (cycle.numberOfSteps > 1) {
+        expandCurrentCycle = properties.expandCycles;
+        if (!expandCurrentCycle) {
+          cycleNotSupported();
+        }
+      } else {
+        onBoreMilling(cycle);
+      }
+      break;
+    case "thread-milling":
+      if (cycle.numberOfSteps > 1) {
+        expandCurrentCycle = properties.expandCycles;
+        if (!expandCurrentCycle) {
+          cycleNotSupported();
+        }
+      } else {
+        onThreadMilling(cycle);
+      }
+      break;
+    case "circular-pocket-milling":
+      onCircularPocketMilling(cycle);
+      break;
+    default:
       expandCurrentCycle = properties.expandCycles;
       if (!expandCurrentCycle) {
         cycleNotSupported();
       }
-    } else {
-      onBoreMilling(cycle);
-    }
-    break;
-  case "thread-milling":
-    if (cycle.numberOfSteps > 1) {
-      expandCurrentCycle = properties.expandCycles;
-      if (!expandCurrentCycle) {
-        cycleNotSupported();
-      }
-    } else {
-      onThreadMilling(cycle);
-    }
-    break;
-  case "circular-pocket-milling":
-    onCircularPocketMilling(cycle);
-    break;
-  default:
-    expandCurrentCycle = properties.expandCycles;
-    if (!expandCurrentCycle) {
-      cycleNotSupported();
-    }
   }
 }
 
 /** Convert approach to sign. */
 function approach(value) {
-  validate((value == "positive") || (value == "negative"), "Invalid approach.");
-  return (value == "positive") ? 1 : -1;
+  validate(value == "positive" || value == "negative", "Invalid approach.");
+  return value == "positive" ? 1 : -1;
 }
 
 function onCyclePoint(x, y, z) {
   if (isProbeOperation()) {
-    if (!isSameDirection(currentSection.workPlane.forward, new Vector(0, 0, 1)) && (!cycle.probeMode || (cycle.probeMode == 0))) {
-      error(localize("Updating WCS / work offset using probing is only supported by the CNC in the WCS frame."));
+    if (
+      !isSameDirection(currentSection.workPlane.forward, new Vector(0, 0, 1)) &&
+      (!cycle.probeMode || cycle.probeMode == 0)
+    ) {
+      error(
+        localize(
+          "Updating WCS / work offset using probing is only supported by the CNC in the WCS frame."
+        )
+      );
       return;
     }
     switch (cycleType) {
-    case "probing-x":
-      writeBlock("TCH PROBE 419 " + localize("DATUM IN ONE AXIS") + " ~" + EOL
-        + "  Q263=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-        + "  Q264=" + xyzFormat.format(y) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(1) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER")
-      );
-      break;
-    case "probing-y":
-      writeBlock("TCH PROBE 419 " + localize("DATUM IN ONE AXIS") + " ~" + EOL
-        + "  Q263=" + xyzFormat.format(x) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-        + "  Q264=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(2) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER")
-      );
-      break;
-    case "probing-z":
-      writeBlock("TCH PROBE 417 " + localize("DATUM IN TS AXIS") + " ~" + EOL
-        + "  Q263=" + xyzFormat.format(x) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-        + "  Q264=" + xyzFormat.format(y) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-        + "  Q294=" + xyzFormat.format(z - cycle.depth) + " ;" + localize("1ST POINT 3RD AXIS") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(z - cycle.depth) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER")
-      );
-      break;
-    case "probing-x-channel":
-    case "probing-x-channel-with-island":
-      writeBlock("TCH PROBE 408 " + localize("SLOT CENTER REF PT") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q311=" + xyzFormat.format(cycle.width1) + " ;" + localize("SLOT WIDTH") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(1) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(cycleType == "probing-x-channel" ? 0 : 1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q405=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-    case "probing-y-channel":
-    case "probing-y-channel-with-island":
-      writeBlock("TCH PROBE 408 " + localize("SLOT CENTER REF PT") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q311=" + xyzFormat.format(cycle.width1) + " ;" + localize("SLOT WIDTH") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(2) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(cycleType == "probing-y-channel" ? 0 : 1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q405=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-    case "probing-x-wall":
-      writeBlock("TCH PROBE 409 " + localize("RIDGE CENTER REF PT") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q311=" + xyzFormat.format(cycle.width1) + " ;" + localize("RIDGE WIDTH") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(1) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q405=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-    case "probing-y-wall":
-      writeBlock("TCH PROBE 409 " + localize("RIDGE CENTER REF PT") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q311=" + xyzFormat.format(cycle.width1) + " ;" + localize("RIDGE WIDTH") + " ~" + EOL
-        + "  Q272=" + xyzFormat.format(2) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q405=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-/*
+      case "probing-x":
+        writeBlock(
+          "TCH PROBE 419 " +
+            localize("DATUM IN ONE AXIS") +
+            " ~" +
+            EOL +
+            "  Q263=" +
+            xyzFormat.format(
+              x +
+                approach(cycle.approach1) *
+                  (cycle.probeClearance + tool.diameter / 2)
+            ) +
+            " ;" +
+            localize("1ST POINT 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q264=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("1ST POINT 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q267=" +
+            xyzFormat.format(approach(cycle.approach1)) +
+            " ;" +
+            localize("TRAVERSE DIRECTION") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(
+              x +
+                approach(cycle.approach1) *
+                  (cycle.probeClearance + tool.diameter / 2)
+            ) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER")
+        );
+        break;
+      case "probing-y":
+        writeBlock(
+          "TCH PROBE 419 " +
+            localize("DATUM IN ONE AXIS") +
+            " ~" +
+            EOL +
+            "  Q263=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("1ST POINT 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q264=" +
+            xyzFormat.format(
+              y +
+                approach(cycle.approach1) *
+                  (cycle.probeClearance + tool.diameter / 2)
+            ) +
+            " ;" +
+            localize("1ST POINT 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(2) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q267=" +
+            xyzFormat.format(approach(cycle.approach1)) +
+            " ;" +
+            localize("TRAVERSE DIRECTION") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(
+              y +
+                approach(cycle.approach1) *
+                  (cycle.probeClearance + tool.diameter / 2)
+            ) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER")
+        );
+        break;
+      case "probing-z":
+        writeBlock(
+          "TCH PROBE 417 " +
+            localize("DATUM IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q263=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("1ST POINT 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q264=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("1ST POINT 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q294=" +
+            xyzFormat.format(z - cycle.depth) +
+            " ;" +
+            localize("1ST POINT 3RD AXIS") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(z - cycle.depth) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER")
+        );
+        break;
+      case "probing-x-channel":
+      case "probing-x-channel-with-island":
+        writeBlock(
+          "TCH PROBE 408 " +
+            localize("SLOT CENTER REF PT") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q311=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("SLOT WIDTH") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(cycleType == "probing-x-channel" ? 0 : 1) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q405=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
+        );
+        break;
+      case "probing-y-channel":
+      case "probing-y-channel-with-island":
+        writeBlock(
+          "TCH PROBE 408 " +
+            localize("SLOT CENTER REF PT") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q311=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("SLOT WIDTH") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(2) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(cycleType == "probing-y-channel" ? 0 : 1) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q405=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
+        );
+        break;
+      case "probing-x-wall":
+        writeBlock(
+          "TCH PROBE 409 " +
+            localize("RIDGE CENTER REF PT") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q311=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("RIDGE WIDTH") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q405=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
+        );
+        break;
+      case "probing-y-wall":
+        writeBlock(
+          "TCH PROBE 409 " +
+            localize("RIDGE CENTER REF PT") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q311=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("RIDGE WIDTH") +
+            " ~" +
+            EOL +
+            "  Q272=" +
+            xyzFormat.format(2) +
+            " ;" +
+            localize("MEASURING AXIS") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q405=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
+        );
+        break;
+      /*
     case "probing-xy-inner-corner":
       // Heidenhain needs 2 points per surface for inner and outer corner probing
       var spacing = cycle.probeSpacing ? cycle.probeSpacing : tool.diameter * 0.2;
@@ -1929,179 +3797,869 @@ function onCyclePoint(x, y, z) {
       );
       break;
 */
-    case "probing-xy-circular-hole":
-    case "probing-xy-circular-hole-with-island":
-      writeBlock("TCH PROBE 412 " + localize("DATUM INSIDE CIRCLE") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q262=" + xyzFormat.format(cycle.width1) + " ;" + localize("NOMINAL DIAMETER") + " ~" + EOL
-        + "  Q325=" + xyzFormat.format(0) + " ;" + localize("STARTING ANGLE") + " ~" + EOL
-        + "  Q247=" + xyzFormat.format(90) + " ;" + localize("STEPPING ANGLE") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q331=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q332=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q423=" + xyzFormat.format(4) + " ;" + localize("NO. OF MEAS. POINTS") + " ~" + EOL
-        + "  Q365=" + xyzFormat.format(1) + " ;" + localize("TYPE OF TRAVERSE")
-      );
-      break;
-    case "probing-xy-rectangular-hole":
-    case "probing-xy-rectangular-hole-with-island":
-      writeBlock("TCH PROBE 410 " + localize("DATUM INSIDE RECTAN.") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q323=" + xyzFormat.format(cycle.width1) + " ;" + localize("FIRST SIDE LENGTH") + " ~" + EOL
-        + "  Q324=" + xyzFormat.format(cycle.width2) + " ;" + localize("2ND SIDE LENGTH") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(cycleType == "probing-xy-rectangular-hole" ? 0 : 1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q331=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q332=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-    case "probing-xy-circular-boss":
-      writeBlock("TCH PROBE 413 " + localize("DATUM OUTSIDE CIRCLE") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q262=" + xyzFormat.format(cycle.width1) + " ;" + localize("NOMINAL DIAMETER") + " ~" + EOL
-        + "  Q325=" + xyzFormat.format(0)+ " ;" + localize("STARTING ANGLE") + " ~" + EOL
-        + "  Q247=" + xyzFormat.format(90) + " ;" + localize("STEPPING ANGLE") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q331=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q332=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q423=" + xyzFormat.format(4) + " ;" + localize("NO. OF MEAS. POINTS") + " ~" + EOL
-        + "  Q365=" + xyzFormat.format(1) + " ;" + localize("TYPE OF TRAVERSE")
-      );
-      break;
-    case "probing-xy-rectangular-boss":
-      writeBlock("TCH PROBE 411 " + localize("DATUM OUTS. RECTAN.") + " ~" + EOL
-        + "  Q321=" + xyzFormat.format(x) + " ;" + localize("CENTER IN 1ST AXIS") + " ~" + EOL
-        + "  Q322=" + xyzFormat.format(y) + " ;" + localize("CENTER IN 2ND AXIS") + " ~" + EOL
-        + "  Q323=" + xyzFormat.format(cycle.width1) + " ;" + localize("FIRST SIDE LENGTH") + " ~" + EOL
-        + "  Q324=" + xyzFormat.format(cycle.width2) + " ;" + localize("2ND SIDE LENGTH") + " ~" + EOL
-        + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-        + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-        + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-        + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-        + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-        + "  Q331=" + xyzFormat.format(x) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q332=" + xyzFormat.format(y) + " ;" + localize("DATUM") + " ~" + EOL
-        + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-        + "  Q381=" + xyzFormat.format(0) + " ;" + localize("PROBE IN TS AXIS") + " ~" + EOL
-        + "  Q382=" + xyzFormat.format(0) + " ;" + localize("1ST CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q383=" + xyzFormat.format(0) + " ;" + localize("2ND CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q384=" + xyzFormat.format(0) + " ;" + localize("3RD CO. FOR TS AXIS") + " ~" + EOL
-        + "  Q333=" + xyzFormat.format(0) + " ;" + localize("DATUM")
-      );
-      break;
-    case "probing-x-plane-angle":
-      if (!machineConfiguration.isMultiAxisConfiguration()) {
-        writeBlock("TCH PROBE 400 " + localize("BASIC ROTATION") + " ~" + EOL
-          + "  Q263=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-          + "  Q264=" + xyzFormat.format(y + (cycle.probeSpacing / 2)) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-          + "  Q265=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("2ND POINT 1ST AXIS") + " ~" + EOL
-          + "  Q266=" + xyzFormat.format(y - (cycle.probeSpacing / 2)) + " ;" + localize("2ND POINT 2ND AXIS") + " ~" + EOL
-          + "  Q272=" + xyzFormat.format(1) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-          + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-          + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-          + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-          + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-          + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-          + "  Q307=" + xyzFormat.format(0) + " ;" + localize("PRESET ROTATION ANG.") + " ~" + EOL
-          + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE")
+      case "probing-xy-circular-hole":
+      case "probing-xy-circular-hole-with-island":
+        writeBlock(
+          "TCH PROBE 412 " +
+            localize("DATUM INSIDE CIRCLE") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q262=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("NOMINAL DIAMETER") +
+            " ~" +
+            EOL +
+            "  Q325=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("STARTING ANGLE") +
+            " ~" +
+            EOL +
+            "  Q247=" +
+            xyzFormat.format(90) +
+            " ;" +
+            localize("STEPPING ANGLE") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q331=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q332=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q423=" +
+            xyzFormat.format(4) +
+            " ;" +
+            localize("NO. OF MEAS. POINTS") +
+            " ~" +
+            EOL +
+            "  Q365=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("TYPE OF TRAVERSE")
         );
-      } else {
-        writeBlock("TCH PROBE 403 " + localize("ROT IN ROTARY AXIS") + " ~" + EOL
-          + "  Q263=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-          + "  Q264=" + xyzFormat.format(y + (cycle.probeSpacing / 2)) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-          + "  Q265=" + xyzFormat.format(x + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("2ND POINT 1ST AXIS") + " ~" + EOL
-          + "  Q266=" + xyzFormat.format(y - (cycle.probeSpacing / 2)) + " ;" + localize("2ND POINT 2ND AXIS") + " ~" + EOL
-          + "  Q272=" + xyzFormat.format(1) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-          + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-          + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-          + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-          + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-          + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-          + "  Q312=" + xyzFormat.format(0) + " ;" + localize("COMPENSATION AXIS") + " ~" + EOL
-          + "  Q337=" + xyzFormat.format(1) + " ;" + localize("SET TO ZERO") + " ~" + EOL
-          + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-          + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-          + "  Q380=" + xyzFormat.format(0) + " ;" + localize("REFERENCE ANGLE")
+        break;
+      case "probing-xy-rectangular-hole":
+      case "probing-xy-rectangular-hole-with-island":
+        writeBlock(
+          "TCH PROBE 410 " +
+            localize("DATUM INSIDE RECTAN.") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q323=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("FIRST SIDE LENGTH") +
+            " ~" +
+            EOL +
+            "  Q324=" +
+            xyzFormat.format(cycle.width2) +
+            " ;" +
+            localize("2ND SIDE LENGTH") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance ? cycle.probeClearance : 0) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(
+              cycleType == "probing-xy-rectangular-hole" ? 0 : 1
+            ) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q331=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q332=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
         );
-      }
-      break;
-    case "probing-y-plane-angle":
-      if (!machineConfiguration.isMultiAxisConfiguration()) {
-        writeBlock("TCH PROBE 400 " + localize("BASIC ROTATION") + " ~" + EOL
-          + "  Q263=" + xyzFormat.format(x - (cycle.probeSpacing / 2)) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-          + "  Q264=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-          + "  Q265=" + xyzFormat.format(x + (cycle.probeSpacing / 2)) + " ;" + localize("2ND POINT 1ST AXIS") + " ~" + EOL
-          + "  Q266=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("2ND POINT 2ND AXIS") + " ~" + EOL
-          + "  Q272=" + xyzFormat.format(2) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-          + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-          + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-          + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-          + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-          + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-          + "  Q307=" + xyzFormat.format(0) + " ;" + localize("PRESET ROTATION ANG.") + " ~" + EOL
-          + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE")
+        break;
+      case "probing-xy-circular-boss":
+        writeBlock(
+          "TCH PROBE 413 " +
+            localize("DATUM OUTSIDE CIRCLE") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q262=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("NOMINAL DIAMETER") +
+            " ~" +
+            EOL +
+            "  Q325=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("STARTING ANGLE") +
+            " ~" +
+            EOL +
+            "  Q247=" +
+            xyzFormat.format(90) +
+            " ;" +
+            localize("STEPPING ANGLE") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q331=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q332=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q423=" +
+            xyzFormat.format(4) +
+            " ;" +
+            localize("NO. OF MEAS. POINTS") +
+            " ~" +
+            EOL +
+            "  Q365=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("TYPE OF TRAVERSE")
         );
-      } else {
-        writeBlock("TCH PROBE 403 " + localize("ROT IN ROTARY AXIS") + " ~" + EOL
-          + "  Q263=" + xyzFormat.format(x - (cycle.probeSpacing / 2)) + " ;" + localize("1ST POINT 1ST AXIS") + " ~" + EOL
-          + "  Q264=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("1ST POINT 2ND AXIS") + " ~" + EOL
-          + "  Q265=" + xyzFormat.format(x + (cycle.probeSpacing / 2)) + " ;" + localize("2ND POINT 1ST AXIS") + " ~" + EOL
-          + "  Q266=" + xyzFormat.format(y + approach(cycle.approach1) * (cycle.probeClearance + tool.diameter / 2)) + " ;" + localize("2ND POINT 2ND AXIS") + " ~" + EOL
-          + "  Q272=" + xyzFormat.format(2) + " ;" + localize("MEASURING AXIS") + " ~" + EOL
-          + "  Q267=" + xyzFormat.format(approach(cycle.approach1)) + " ;" + localize("TRAVERSE DIRECTION") + " ~" + EOL
-          + "  Q261=" + xyzFormat.format((z + tool.diameter / 2) - cycle.depth) + " ;" + localize("MEASURING HEIGHT") + " ~" + EOL
-          + "  Q320=" + xyzFormat.format(cycle.probeClearance) + " ;" + localize("SET-UP CLEARANCE") + " ~" + EOL
-          + "  Q260=" + xyzFormat.format(cycle.stock) + " ;" + localize("CLEARANCE HEIGHT") + " ~" + EOL
-          + "  Q301=" + xyzFormat.format(1) + " ;" + localize("MOVE TO CLEARANCE") + " ~" + EOL
-          + "  Q312=" + xyzFormat.format(0) + " ;" + localize("COMPENSATION AXIS") + " ~" + EOL
-          + "  Q337=" + xyzFormat.format(1) + " ;" + localize("SET TO ZERO") + " ~" + EOL
-          + "  Q305=" + xyzFormat.format(probeOutputWorkOffset) + " ;" + localize("NUMBER IN TABLE") + " ~" + EOL
-          + "  Q303=" + xyzFormat.format(1) + " ;" + localize("MEAS. VALUE TRANSFER") + " ~" + EOL
-          + "  Q380=" + xyzFormat.format(0) + " ;" + localize("REFERENCE ANGLE")
+        break;
+      case "probing-xy-rectangular-boss":
+        writeBlock(
+          "TCH PROBE 411 " +
+            localize("DATUM OUTS. RECTAN.") +
+            " ~" +
+            EOL +
+            "  Q321=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("CENTER IN 1ST AXIS") +
+            " ~" +
+            EOL +
+            "  Q322=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("CENTER IN 2ND AXIS") +
+            " ~" +
+            EOL +
+            "  Q323=" +
+            xyzFormat.format(cycle.width1) +
+            " ;" +
+            localize("FIRST SIDE LENGTH") +
+            " ~" +
+            EOL +
+            "  Q324=" +
+            xyzFormat.format(cycle.width2) +
+            " ;" +
+            localize("2ND SIDE LENGTH") +
+            " ~" +
+            EOL +
+            "  Q261=" +
+            xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+            " ;" +
+            localize("MEASURING HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q320=" +
+            xyzFormat.format(cycle.probeClearance) +
+            " ;" +
+            localize("SET-UP CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q260=" +
+            xyzFormat.format(cycle.stock) +
+            " ;" +
+            localize("CLEARANCE HEIGHT") +
+            " ~" +
+            EOL +
+            "  Q301=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MOVE TO CLEARANCE") +
+            " ~" +
+            EOL +
+            "  Q305=" +
+            xyzFormat.format(probeOutputWorkOffset) +
+            " ;" +
+            localize("NUMBER IN TABLE") +
+            " ~" +
+            EOL +
+            "  Q331=" +
+            xyzFormat.format(x) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q332=" +
+            xyzFormat.format(y) +
+            " ;" +
+            localize("DATUM") +
+            " ~" +
+            EOL +
+            "  Q303=" +
+            xyzFormat.format(1) +
+            " ;" +
+            localize("MEAS. VALUE TRANSFER") +
+            " ~" +
+            EOL +
+            "  Q381=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("PROBE IN TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q382=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("1ST CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q383=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("2ND CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q384=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("3RD CO. FOR TS AXIS") +
+            " ~" +
+            EOL +
+            "  Q333=" +
+            xyzFormat.format(0) +
+            " ;" +
+            localize("DATUM")
         );
-      }
-      break;
-    default:
-      cycleNotSupported();
+        break;
+      case "probing-x-plane-angle":
+        if (!machineConfiguration.isMultiAxisConfiguration()) {
+          writeBlock(
+            "TCH PROBE 400 " +
+              localize("BASIC ROTATION") +
+              " ~" +
+              EOL +
+              "  Q263=" +
+              xyzFormat.format(
+                x +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("1ST POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q264=" +
+              xyzFormat.format(y + cycle.probeSpacing / 2) +
+              " ;" +
+              localize("1ST POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q265=" +
+              xyzFormat.format(
+                x +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("2ND POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q266=" +
+              xyzFormat.format(y - cycle.probeSpacing / 2) +
+              " ;" +
+              localize("2ND POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q272=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MEASURING AXIS") +
+              " ~" +
+              EOL +
+              "  Q267=" +
+              xyzFormat.format(approach(cycle.approach1)) +
+              " ;" +
+              localize("TRAVERSE DIRECTION") +
+              " ~" +
+              EOL +
+              "  Q261=" +
+              xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+              " ;" +
+              localize("MEASURING HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q320=" +
+              xyzFormat.format(cycle.probeClearance) +
+              " ;" +
+              localize("SET-UP CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q260=" +
+              xyzFormat.format(cycle.stock) +
+              " ;" +
+              localize("CLEARANCE HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q301=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MOVE TO CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q307=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("PRESET ROTATION ANG.") +
+              " ~" +
+              EOL +
+              "  Q305=" +
+              xyzFormat.format(probeOutputWorkOffset) +
+              " ;" +
+              localize("NUMBER IN TABLE")
+          );
+        } else {
+          writeBlock(
+            "TCH PROBE 403 " +
+              localize("ROT IN ROTARY AXIS") +
+              " ~" +
+              EOL +
+              "  Q263=" +
+              xyzFormat.format(
+                x +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("1ST POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q264=" +
+              xyzFormat.format(y + cycle.probeSpacing / 2) +
+              " ;" +
+              localize("1ST POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q265=" +
+              xyzFormat.format(
+                x +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("2ND POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q266=" +
+              xyzFormat.format(y - cycle.probeSpacing / 2) +
+              " ;" +
+              localize("2ND POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q272=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MEASURING AXIS") +
+              " ~" +
+              EOL +
+              "  Q267=" +
+              xyzFormat.format(approach(cycle.approach1)) +
+              " ;" +
+              localize("TRAVERSE DIRECTION") +
+              " ~" +
+              EOL +
+              "  Q261=" +
+              xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+              " ;" +
+              localize("MEASURING HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q320=" +
+              xyzFormat.format(cycle.probeClearance) +
+              " ;" +
+              localize("SET-UP CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q260=" +
+              xyzFormat.format(cycle.stock) +
+              " ;" +
+              localize("CLEARANCE HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q301=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MOVE TO CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q312=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("COMPENSATION AXIS") +
+              " ~" +
+              EOL +
+              "  Q337=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("SET TO ZERO") +
+              " ~" +
+              EOL +
+              "  Q305=" +
+              xyzFormat.format(probeOutputWorkOffset) +
+              " ;" +
+              localize("NUMBER IN TABLE") +
+              " ~" +
+              EOL +
+              "  Q303=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MEAS. VALUE TRANSFER") +
+              " ~" +
+              EOL +
+              "  Q380=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("REFERENCE ANGLE")
+          );
+        }
+        break;
+      case "probing-y-plane-angle":
+        if (!machineConfiguration.isMultiAxisConfiguration()) {
+          writeBlock(
+            "TCH PROBE 400 " +
+              localize("BASIC ROTATION") +
+              " ~" +
+              EOL +
+              "  Q263=" +
+              xyzFormat.format(x - cycle.probeSpacing / 2) +
+              " ;" +
+              localize("1ST POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q264=" +
+              xyzFormat.format(
+                y +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("1ST POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q265=" +
+              xyzFormat.format(x + cycle.probeSpacing / 2) +
+              " ;" +
+              localize("2ND POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q266=" +
+              xyzFormat.format(
+                y +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("2ND POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q272=" +
+              xyzFormat.format(2) +
+              " ;" +
+              localize("MEASURING AXIS") +
+              " ~" +
+              EOL +
+              "  Q267=" +
+              xyzFormat.format(approach(cycle.approach1)) +
+              " ;" +
+              localize("TRAVERSE DIRECTION") +
+              " ~" +
+              EOL +
+              "  Q261=" +
+              xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+              " ;" +
+              localize("MEASURING HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q320=" +
+              xyzFormat.format(cycle.probeClearance) +
+              " ;" +
+              localize("SET-UP CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q260=" +
+              xyzFormat.format(cycle.stock) +
+              " ;" +
+              localize("CLEARANCE HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q301=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MOVE TO CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q307=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("PRESET ROTATION ANG.") +
+              " ~" +
+              EOL +
+              "  Q305=" +
+              xyzFormat.format(probeOutputWorkOffset) +
+              " ;" +
+              localize("NUMBER IN TABLE")
+          );
+        } else {
+          writeBlock(
+            "TCH PROBE 403 " +
+              localize("ROT IN ROTARY AXIS") +
+              " ~" +
+              EOL +
+              "  Q263=" +
+              xyzFormat.format(x - cycle.probeSpacing / 2) +
+              " ;" +
+              localize("1ST POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q264=" +
+              xyzFormat.format(
+                y +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("1ST POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q265=" +
+              xyzFormat.format(x + cycle.probeSpacing / 2) +
+              " ;" +
+              localize("2ND POINT 1ST AXIS") +
+              " ~" +
+              EOL +
+              "  Q266=" +
+              xyzFormat.format(
+                y +
+                  approach(cycle.approach1) *
+                    (cycle.probeClearance + tool.diameter / 2)
+              ) +
+              " ;" +
+              localize("2ND POINT 2ND AXIS") +
+              " ~" +
+              EOL +
+              "  Q272=" +
+              xyzFormat.format(2) +
+              " ;" +
+              localize("MEASURING AXIS") +
+              " ~" +
+              EOL +
+              "  Q267=" +
+              xyzFormat.format(approach(cycle.approach1)) +
+              " ;" +
+              localize("TRAVERSE DIRECTION") +
+              " ~" +
+              EOL +
+              "  Q261=" +
+              xyzFormat.format(z + tool.diameter / 2 - cycle.depth) +
+              " ;" +
+              localize("MEASURING HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q320=" +
+              xyzFormat.format(cycle.probeClearance) +
+              " ;" +
+              localize("SET-UP CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q260=" +
+              xyzFormat.format(cycle.stock) +
+              " ;" +
+              localize("CLEARANCE HEIGHT") +
+              " ~" +
+              EOL +
+              "  Q301=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MOVE TO CLEARANCE") +
+              " ~" +
+              EOL +
+              "  Q312=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("COMPENSATION AXIS") +
+              " ~" +
+              EOL +
+              "  Q337=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("SET TO ZERO") +
+              " ~" +
+              EOL +
+              "  Q305=" +
+              xyzFormat.format(probeOutputWorkOffset) +
+              " ;" +
+              localize("NUMBER IN TABLE") +
+              " ~" +
+              EOL +
+              "  Q303=" +
+              xyzFormat.format(1) +
+              " ;" +
+              localize("MEAS. VALUE TRANSFER") +
+              " ~" +
+              EOL +
+              "  Q380=" +
+              xyzFormat.format(0) +
+              " ;" +
+              localize("REFERENCE ANGLE")
+          );
+        }
+        break;
+      default:
+        cycleNotSupported();
     }
     return;
   }
-  
+
   if (!expandCurrentCycle) {
     // execute current cycle after this positioning block
-/*
+    /*
     if (cycleType == "circular-pocket-milling") {
       if (isFirstCyclePoint()) {
         onCircularPocketFinishMilling(x, y, cycle);
@@ -2127,8 +4685,15 @@ function onCyclePoint(x, y, z) {
       }
     }
 
-    writeBlock("L" + xOutput.format(x) + yOutput.format(y) + " FMAX " + mFormat.format(99));
-    if (incrementalMode) { // set current position to clearance height
+    writeBlock(
+      "L" +
+        xOutput.format(x) +
+        yOutput.format(y) +
+        " FMAX " +
+        mFormat.format(99)
+    );
+    if (incrementalMode) {
+      // set current position to clearance height
       setCyclePosition(cycle.clearance);
     }
   } else {
@@ -2158,7 +4723,9 @@ function onRapid(x, y, z) {
   var xyz = xOutput.format(x) + yOutput.format(y) + zOutput.format(z);
   if (xyz) {
     pendingRadiusCompensation = -1;
-    writeBlock("L" + xyz + radiusCompensationTable.lookup(radiusCompensation) + " FMAX");
+    writeBlock(
+      "L" + xyz + radiusCompensationTable.lookup(radiusCompensation) + " FMAX"
+    );
   }
   forceFeed();
 }
@@ -2168,9 +4735,12 @@ function onLinear(x, y, z, feed) {
   var f = getFeed(feed);
   if (xyz) {
     pendingRadiusCompensation = -1;
-    writeBlock("L" + xyz + radiusCompensationTable.lookup(radiusCompensation) + f);
+    writeBlock(
+      "L" + xyz + radiusCompensationTable.lookup(radiusCompensation) + f
+    );
   } else if (f) {
-    if (getNextRecord().isMotion()) { // try not to output feed without motion
+    if (getNextRecord().isMotion()) {
+      // try not to output feed without motion
       forceFeed(); // force feed on next line
     } else {
       pendingRadiusCompensation = -1;
@@ -2181,21 +4751,44 @@ function onLinear(x, y, z, feed) {
 
 function onRapid5D(x, y, z, a, b, c) {
   if (pendingRadiusCompensation >= 0) {
-    error(localize("Radius compensation cannot be activated/deactivated for 5-axis move."));
+    error(
+      localize(
+        "Radius compensation cannot be activated/deactivated for 5-axis move."
+      )
+    );
     return;
   }
 
   if (currentSection.isOptimizedForMachine()) {
-    var xyzabc = xOutput.format(x) + yOutput.format(y) + zOutput.format(z) + aOutput.format(a) + bOutput.format(b) + cOutput.format(c);
+    var xyzabc =
+      xOutput.format(x) +
+      yOutput.format(y) +
+      zOutput.format(z) +
+      aOutput.format(a) +
+      bOutput.format(b) +
+      cOutput.format(c);
     if (xyzabc) {
-      writeBlock("L" + xyzabc + radiusCompensationTable.lookup(radiusCompensation) + " FMAX");
+      writeBlock(
+        "L" +
+          xyzabc +
+          radiusCompensationTable.lookup(radiusCompensation) +
+          " FMAX"
+      );
     }
   } else {
     forceXYZ(); // required
-    var pt = xOutput.format(x) + yOutput.format(y) + zOutput.format(z) + txOutput.format(a) + tyOutput.format(b) + tzOutput.format(c);
+    var pt =
+      xOutput.format(x) +
+      yOutput.format(y) +
+      zOutput.format(z) +
+      txOutput.format(a) +
+      tyOutput.format(b) +
+      tzOutput.format(c);
     if (pt) {
       pendingRadiusCompensation = -1;
-      writeBlock("LN" + pt + radiusCompensationTable.lookup(radiusCompensation) + " FMAX");
+      writeBlock(
+        "LN" + pt + radiusCompensationTable.lookup(radiusCompensation) + " FMAX"
+      );
     }
   }
   forceFeed(); // force feed on next line
@@ -2203,36 +4796,62 @@ function onRapid5D(x, y, z, a, b, c) {
 
 function onLinear5D(x, y, z, a, b, c, feed) {
   if (pendingRadiusCompensation >= 0) {
-    error(localize("Radius compensation cannot be activated/deactivated for 5-axis move."));
+    error(
+      localize(
+        "Radius compensation cannot be activated/deactivated for 5-axis move."
+      )
+    );
     return;
   }
 
   if (currentSection.isOptimizedForMachine()) {
-    var xyzabc = xOutput.format(x) + yOutput.format(y) + zOutput.format(z) + aOutput.format(a) + bOutput.format(b) + cOutput.format(c);
+    var xyzabc =
+      xOutput.format(x) +
+      yOutput.format(y) +
+      zOutput.format(z) +
+      aOutput.format(a) +
+      bOutput.format(b) +
+      cOutput.format(c);
     var f = getFeed(feed);
     if (xyzabc) {
-      writeBlock("L" + xyzabc + radiusCompensationTable.lookup(radiusCompensation) + f);
+      writeBlock(
+        "L" + xyzabc + radiusCompensationTable.lookup(radiusCompensation) + f
+      );
     } else if (f) {
-      if (getNextRecord().isMotion()) { // try not to output feed without motion
+      if (getNextRecord().isMotion()) {
+        // try not to output feed without motion
         forceFeed(); // force feed on next line
       } else {
         pendingRadiusCompensation = -1;
-        writeBlock("L" + radiusCompensationTable.lookup(radiusCompensation) + f);
+        writeBlock(
+          "L" + radiusCompensationTable.lookup(radiusCompensation) + f
+        );
       }
     }
   } else {
     forceXYZ(); // required
-    var pt = xOutput.format(x) + yOutput.format(y) + zOutput.format(z) + txOutput.format(a) + tyOutput.format(b) + tzOutput.format(c);
+    var pt =
+      xOutput.format(x) +
+      yOutput.format(y) +
+      zOutput.format(z) +
+      txOutput.format(a) +
+      tyOutput.format(b) +
+      tzOutput.format(c);
     var f = getFeed(feed);
     if (pt) {
       pendingRadiusCompensation = -1;
-      writeBlock("LN" + pt + radiusCompensationTable.lookup(radiusCompensation) + f);
+      writeBlock(
+        "LN" + pt + radiusCompensationTable.lookup(radiusCompensation) + f
+      );
     } else if (f) {
-      if (getNextRecord().isMotion()) { // try not to output feed without motion
+      if (getNextRecord().isMotion()) {
+        // try not to output feed without motion
         forceFeed(); // force feed on next line
       } else {
         pendingRadiusCompensation = -1;
-        writeBlock("LN" + radiusCompensationTable.lookup(radiusCompensation) + f);
+        writeBlock(
+          "LN" + radiusCompensationTable.lookup(radiusCompensation) + f
+        );
       }
     }
   }
@@ -2240,58 +4859,76 @@ function onLinear5D(x, y, z, a, b, c, feed) {
 
 function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
   if (pendingRadiusCompensation >= 0) {
-    error(localize("Radius compensation cannot be activated/deactivated for a circular move."));
+    error(
+      localize(
+        "Radius compensation cannot be activated/deactivated for a circular move."
+      )
+    );
     return;
   }
 
   var start = getCurrentPosition();
   switch (getCircularPlane()) {
-  case PLANE_XY:
-    if (incrementalMode) {
-      writeBlock("CC IX" + xyzFormat.format(cx - start.x) + " IY" + xyzFormat.format(cy - start.y));
-    } else {
-      writeBlock("CC X" + xyzFormat.format(cx) + " Y" + xyzFormat.format(cy));
-    }
-    break;
-  case PLANE_ZX:
-    if (isHelical()) {
+    case PLANE_XY:
+      if (incrementalMode) {
+        writeBlock(
+          "CC IX" +
+            xyzFormat.format(cx - start.x) +
+            " IY" +
+            xyzFormat.format(cy - start.y)
+        );
+      } else {
+        writeBlock("CC X" + xyzFormat.format(cx) + " Y" + xyzFormat.format(cy));
+      }
+      break;
+    case PLANE_ZX:
+      if (isHelical()) {
+        var t = tolerance;
+        if (t == 0 && hasParameter("operation:tolerance")) {
+          t = getParameter("operation:tolerance");
+        }
+        linearize(t);
+        return;
+      }
+      if (incrementalMode) {
+        writeBlock(
+          "CC IX" +
+            xyzFormat.format(cx - start.x) +
+            " IZ" +
+            xyzFormat.format(cz - start.z)
+        );
+      } else {
+        writeBlock("CC X" + xyzFormat.format(cx) + " Z" + xyzFormat.format(cz));
+      }
+      break;
+    case PLANE_YZ:
+      if (isHelical()) {
+        var t = tolerance;
+        if (t == 0 && hasParameter("operation:tolerance")) {
+          t = getParameter("operation:tolerance");
+        }
+        linearize(t);
+        return;
+      }
+      if (incrementalMode) {
+        writeBlock(
+          "CC IY" +
+            xyzFormat.format(cy - start.y) +
+            " IZ" +
+            xyzFormat.format(cz - start.z)
+        );
+      } else {
+        writeBlock("CC Y" + xyzFormat.format(cy) + " Z" + xyzFormat.format(cz));
+      }
+      break;
+    default:
       var t = tolerance;
-      if ((t == 0) && hasParameter("operation:tolerance")) {
+      if (t == 0 && hasParameter("operation:tolerance")) {
         t = getParameter("operation:tolerance");
       }
       linearize(t);
       return;
-    }
-    if (incrementalMode) {
-      writeBlock("CC IX" + xyzFormat.format(cx - start.x) + " IZ" + xyzFormat.format(cz - start.z));
-    } else {
-      writeBlock("CC X" + xyzFormat.format(cx) + " Z" + xyzFormat.format(cz));
-    }
-    break;
-  case PLANE_YZ:
-    if (isHelical()) {
-      var t = tolerance;
-      if ((t == 0) && hasParameter("operation:tolerance")) {
-        t = getParameter("operation:tolerance");
-      }
-      linearize(t);
-      return;
-    }
-    if (incrementalMode) {
-      writeBlock("CC IY" + xyzFormat.format(cy - start.y) + " IZ" + xyzFormat.format(cz - start.z));
-    } else {
-      writeBlock("CC Y" + xyzFormat.format(cy) + " Z" + xyzFormat.format(cz));
-    }
-    break;
-  default:
-    var t = tolerance;
-    if ((t == 0) && hasParameter("operation:tolerance")) {
-      t = getParameter("operation:tolerance");
-    }
-    linearize(t);
-    return;
   }
-
 
   if (isHelical()) {
     if (getCircularPlane() == PLANE_XY) {
@@ -2299,13 +4936,14 @@ function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
       var sweep = (clockwise ? -1 : 1) * Math.abs(getCircularSweep());
       var block = "CP IPA" + paFormat.format(sweep) + zOutput.format(z);
       block += clockwise ? " DR-" : " DR+";
-      block += /*radiusCompensationTable.lookup(radiusCompensation) +*/ getFeed(feed);
+      block +=
+        /*radiusCompensationTable.lookup(radiusCompensation) +*/ getFeed(feed);
       writeBlock(block);
       xOutput.reset();
       yOutput.reset();
     } else {
       var t = tolerance;
-      if ((t == 0) && hasParameter("operation:tolerance")) {
+      if (t == 0 && hasParameter("operation:tolerance")) {
         t = getParameter("operation:tolerance");
       }
       linearize(t);
@@ -2315,24 +4953,25 @@ function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
     var sweep = (clockwise ? -1 : 1) * Math.abs(getCircularSweep());
     var block = "CP IPA" + paFormat.format(sweep);
     block += clockwise ? " DR-" : " DR+";
-    block += /*radiusCompensationTable.lookup(radiusCompensation) +*/ getFeed(feed);
+    block +=
+      /*radiusCompensationTable.lookup(radiusCompensation) +*/ getFeed(feed);
     writeBlock(block);
-    
+
     switch (getCircularPlane()) {
-    case PLANE_XY:
-      xOutput.reset();
-      yOutput.reset();
-      break;
-    case PLANE_ZX:
-      xOutput.reset();
-      zOutput.reset();
-      break;
-    case PLANE_YZ:
-      yOutput.reset();
-      zOutput.reset();
-      break;
-    default:
-      invalidateXYZ();
+      case PLANE_XY:
+        xOutput.reset();
+        yOutput.reset();
+        break;
+      case PLANE_ZX:
+        xOutput.reset();
+        zOutput.reset();
+        break;
+      case PLANE_YZ:
+        yOutput.reset();
+        zOutput.reset();
+        break;
+      default:
+        invalidateXYZ();
     }
   }
   if (incrementalMode) {
@@ -2349,18 +4988,18 @@ function forceCoolant() {
 /** Used for gun drilling. */
 function getCoolantCode(coolant) {
   switch (coolant) {
-  case COOLANT_OFF:
-    break;
-  case COOLANT_FLOOD:
-    return [coolants.flood.on, coolants.flood.off];
-  case COOLANT_MIST:
-    return [coolants.mist.on, coolants.mist.off];
-  case COOLANT_THROUGH_TOOL:
-    return [coolants.throughTool.on, coolants.throughTool.off];
-  case COOLANT_AIR:
-  case COOLANT_AIR_THROUGH_TOOL:
-  default:
-    onUnsupportedCoolant(coolant);
+    case COOLANT_OFF:
+      break;
+    case COOLANT_FLOOD:
+      return [coolants.flood.on, coolants.flood.off];
+    case COOLANT_MIST:
+      return [coolants.mist.on, coolants.mist.off];
+    case COOLANT_THROUGH_TOOL:
+      return [coolants.throughTool.on, coolants.throughTool.off];
+    case COOLANT_AIR:
+    case COOLANT_AIR_THROUGH_TOOL:
+    default:
+      onUnsupportedCoolant(coolant);
   }
   return undefined;
 }
@@ -2383,11 +5022,13 @@ function getCoolantCodes(coolant) {
   if (!coolants) {
     error(localize("Coolants have not been defined."));
   }
-  if (!coolantOff) { // use the default coolant off command when an 'off' value is not specified for the previous coolant mode
+  if (!coolantOff) {
+    // use the default coolant off command when an 'off' value is not specified for the previous coolant mode
     coolantOff = coolants.off;
   }
 
-  if (isProbeOperation()) { // avoid coolant output for probing
+  if (isProbeOperation()) {
+    // avoid coolant output for probing
     coolant = COOLANT_OFF;
   }
 
@@ -2396,7 +5037,7 @@ function getCoolantCodes(coolant) {
   }
 
   var multipleCoolantBlocks = new Array(); // create a formatted array to be passed into the outputted line
-  if ((coolant != COOLANT_OFF) && (currentCoolantMode != COOLANT_OFF)) {
+  if (coolant != COOLANT_OFF && currentCoolantMode != COOLANT_OFF) {
     if (!isFirstSection()) {
       multipleCoolantBlocks.push(mFormat.format(coolantOff));
     }
@@ -2409,64 +5050,64 @@ function getCoolantCodes(coolant) {
   }
 
   switch (coolant) {
-  case COOLANT_FLOOD:
-    if (!coolants.flood) {
+    case COOLANT_FLOOD:
+      if (!coolants.flood) {
+        break;
+      }
+      m = coolants.flood.on;
+      coolantOff = coolants.flood.off;
       break;
-    }
-    m = coolants.flood.on;
-    coolantOff = coolants.flood.off;
-    break;
-  case COOLANT_THROUGH_TOOL:
-    if (!coolants.throughTool) {
+    case COOLANT_THROUGH_TOOL:
+      if (!coolants.throughTool) {
+        break;
+      }
+      m = coolants.throughTool.on;
+      coolantOff = coolants.throughTool.off;
       break;
-    }
-    m = coolants.throughTool.on;
-    coolantOff = coolants.throughTool.off;
-    break;
-  case COOLANT_AIR:
-    if (!coolants.air) {
+    case COOLANT_AIR:
+      if (!coolants.air) {
+        break;
+      }
+      m = coolants.air.on;
+      coolantOff = coolants.air.off;
       break;
-    }
-    m = coolants.air.on;
-    coolantOff = coolants.air.off;
-    break;
-  case COOLANT_AIR_THROUGH_TOOL:
-    if (!coolants.airThroughTool) {
+    case COOLANT_AIR_THROUGH_TOOL:
+      if (!coolants.airThroughTool) {
+        break;
+      }
+      m = coolants.airThroughTool.on;
+      coolantOff = coolants.airThroughTool.off;
       break;
-    }
-    m = coolants.airThroughTool.on;
-    coolantOff = coolants.airThroughTool.off;
-    break;
-  case COOLANT_FLOOD_MIST:
-    if (!coolants.floodMist) {
+    case COOLANT_FLOOD_MIST:
+      if (!coolants.floodMist) {
+        break;
+      }
+      m = coolants.floodMist.on;
+      coolantOff = coolants.floodMist.off;
       break;
-    }
-    m = coolants.floodMist.on;
-    coolantOff = coolants.floodMist.off;
-    break;
-  case COOLANT_MIST:
-    if (!coolants.mist) {
+    case COOLANT_MIST:
+      if (!coolants.mist) {
+        break;
+      }
+      m = coolants.mist.on;
+      coolantOff = coolants.mist.off;
       break;
-    }
-    m = coolants.mist.on;
-    coolantOff = coolants.mist.off;
-    break;
-  case COOLANT_SUCTION:
-    if (!coolants.suction) {
+    case COOLANT_SUCTION:
+      if (!coolants.suction) {
+        break;
+      }
+      m = coolants.suction.on;
+      coolantOff = coolants.suction.off;
       break;
-    }
-    m = coolants.suction.on;
-    coolantOff = coolants.suction.off;
-    break;
-  case COOLANT_FLOOD_THROUGH_TOOL:
-    if (!coolants.floodThroughTool) {
+    case COOLANT_FLOOD_THROUGH_TOOL:
+      if (!coolants.floodThroughTool) {
+        break;
+      }
+      m = coolants.floodThroughTool.on;
+      coolantOff = coolants.floodThroughTool.off;
       break;
-    }
-    m = coolants.floodThroughTool.on;
-    coolantOff = coolants.floodThroughTool.off;
-    break;
   }
-  
+
   if (!m) {
     onUnsupportedCoolant(coolant);
     m = 9;
@@ -2487,13 +5128,13 @@ function getCoolantCodes(coolant) {
 }
 
 var mapCommand = {
-  COMMAND_STOP:0,
-  COMMAND_OPTIONAL_STOP:1,
-  COMMAND_END:30,
-  COMMAND_SPINDLE_CLOCKWISE:3,
-  COMMAND_SPINDLE_COUNTERCLOCKWISE:4,
+  COMMAND_STOP: 0,
+  COMMAND_OPTIONAL_STOP: 1,
+  COMMAND_END: 30,
+  COMMAND_SPINDLE_CLOCKWISE: 3,
+  COMMAND_SPINDLE_COUNTERCLOCKWISE: 4,
   // COMMAND_START_SPINDLE
-  COMMAND_STOP_SPINDLE:5
+  COMMAND_STOP_SPINDLE: 5,
   //COMMAND_ORIENTATE_SPINDLE:19,
   //COMMAND_LOAD_TOOL:6, // do not use
   //COMMAND_COOLANT_ON,
@@ -2504,47 +5145,51 @@ var mapCommand = {
 
 function onCommand(command) {
   switch (command) {
-  case COMMAND_COOLANT_OFF:
-    setCoolant(COOLANT_OFF);
-    return;
-  case COMMAND_COOLANT_ON:
-    setCoolant(COOLANT_FLOOD);
-    return;
-  case COMMAND_START_SPINDLE:
-    onCommand(tool.clockwise ? COMMAND_SPINDLE_CLOCKWISE : COMMAND_SPINDLE_COUNTERCLOCKWISE);
-    return;
-  case COMMAND_LOCK_MULTI_AXIS:
-    writeBlock(mFormat.format(15));
-writeBlock(mFormat.format(10));
-    return;
-  case COMMAND_UNLOCK_MULTI_AXIS:
-    writeBlock(mFormat.format(16));
-writeBlock(mFormat.format(11));
-    return;
-  case COMMAND_START_CHIP_TRANSPORT:
-writeBlock(mFormat.format(36));
-    return;
-  case COMMAND_STOP_CHIP_TRANSPORT:
-writeBlock(mFormat.format(35));
-    return;
-  case COMMAND_BREAK_CONTROL:
-    //prepare machine to control, turn off coolant, stop spindle and retract z axis
-    setCoolant(COOLANT_OFF);
-    onCommand(COMMAND_STOP_SPINDLE);
-    writeRetract(Z);
-    // move A and B axis to 0 using CYCL 19
-    writeBlock("CYCL DEF 19.0 WORKING PLANE")
-    writeBlock("CYCL DEF 19.1 A+0 C+0")
-    writeBlock("L A+Q120 C+Q122 R0 FMAX")
-    // change machine parameter, to deactivate tilting - prevent 3D ROT error
-    writeBlock("FN 17: SYSWRITE ID210 NR6 = 0")
-    // call blum probe program saved in TNC
-    writeBlock("CALL PGM TNC:\BLUM\\BLUM586");
-    return;
-  case COMMAND_TOOL_MEASURE:
-    return;
+    case COMMAND_COOLANT_OFF:
+      setCoolant(COOLANT_OFF);
+      return;
+    case COMMAND_COOLANT_ON:
+      setCoolant(COOLANT_FLOOD);
+      return;
+    case COMMAND_START_SPINDLE:
+      onCommand(
+        tool.clockwise
+          ? COMMAND_SPINDLE_CLOCKWISE
+          : COMMAND_SPINDLE_COUNTERCLOCKWISE
+      );
+      return;
+    case COMMAND_LOCK_MULTI_AXIS:
+      writeBlock(mFormat.format(15));
+      writeBlock(mFormat.format(10));
+      return;
+    case COMMAND_UNLOCK_MULTI_AXIS:
+      writeBlock(mFormat.format(16));
+      writeBlock(mFormat.format(11));
+      return;
+    case COMMAND_START_CHIP_TRANSPORT:
+      writeBlock(mFormat.format(36));
+      return;
+    case COMMAND_STOP_CHIP_TRANSPORT:
+      writeBlock(mFormat.format(35));
+      return;
+    case COMMAND_BREAK_CONTROL:
+      //prepare machine to control, turn off coolant, stop spindle and retract z axis
+      setCoolant(COOLANT_OFF);
+      onCommand(COMMAND_STOP_SPINDLE);
+      writeRetract(Z);
+      // move A and B axis to 0 using CYCL 19
+      writeBlock("CYCL DEF 19.0 WORKING PLANE");
+      writeBlock("CYCL DEF 19.1 A+0 C+0");
+      writeBlock("L A+Q120 C+Q122 R0 FMAX");
+      // change machine parameter, to deactivate tilting - prevent 3D ROT error
+      writeBlock("FN 17: SYSWRITE ID210 NR6 = 0");
+      // call blum probe program saved in TNC
+      writeBlock("CALL PGM TNC:BLUM\\BLUM586");
+      return;
+    case COMMAND_TOOL_MEASURE:
+      return;
   }
-  
+
   var stringId = getCommandStringId(command);
   var mcode = mapCommand[stringId];
   if (mcode != undefined) {
@@ -2560,7 +5205,10 @@ function onSectionEnd() {
       if (firstPattern) {
         var finalPosition = getFramePosition(currentSection.getFinalPosition());
         var abc;
-        if (currentSection.isMultiAxis() && machineConfiguration.isMultiAxisConfiguration()) {
+        if (
+          currentSection.isMultiAxis() &&
+          machineConfiguration.isMultiAxisConfiguration()
+        ) {
           abc = currentSection.getFinalToolAxisABC();
         } else {
           abc = currentWorkPlaneABC;
@@ -2580,12 +5228,16 @@ function onSectionEnd() {
   invalidate();
 }
 
-
 properties.homeXYAtEnd = false;
 if (propertyDefinitions === undefined) {
   propertyDefinitions = {};
 }
-propertyDefinitions.homeXYAtEnd = {title:"Home XY at end", description:"Specifies that the machine moves to the home position in XY at the end of the program.", type:"boolean"};
+propertyDefinitions.homeXYAtEnd = {
+  title: "Home XY at end",
+  description:
+    "Specifies that the machine moves to the home position in XY at the end of the program.",
+  type: "boolean",
+};
 
 /** Output block to do safe retract and/or move to home position. */
 function writeRetract() {
@@ -2596,33 +5248,62 @@ function writeRetract() {
   var block = "";
   for (var i = 0; i < arguments.length; ++i) {
     switch (arguments[i]) {
-    case X:
-      block += "X" + xyzFormat.format(machineConfiguration.hasHomePositionX() ? machineConfiguration.getHomePositionX() : 0) + " ";
-      break;
-    case Y:
-      block += "Y" + xyzFormat.format(machineConfiguration.hasHomePositionY() ? machineConfiguration.getHomePositionY() : 0) + " ";
-      break;
-    case Z:
-      if (properties.useM140) {
-        validate((arguments.length <= 1), "Retracts for the Z-axis have to be specified separately by using the useM140 property.");
-        writeBlock("L " + mFormat.format(140) + " MB MAX");
-        retracted = true; // specifies that the tool has been retracted to the safe plane
-        zOutput.reset();
-        return;
-      } else {
-        block += "Z" + xyzFormat.format(machineConfiguration.getRetractPlane()) + " ";
-        retracted = true; // specifies that the tool has been retracted to the safe plane
+      case X:
+        block +=
+          "X" +
+          xyzFormat.format(
+            machineConfiguration.hasHomePositionX()
+              ? machineConfiguration.getHomePositionX()
+              : 0
+          ) +
+          " ";
         break;
-      }
-    default:
-      error(localize("Bad axis specified for writeRetract()."));
-      return;
+      case Y:
+        block +=
+          "Y" +
+          xyzFormat.format(
+            machineConfiguration.hasHomePositionY()
+              ? machineConfiguration.getHomePositionY()
+              : 0
+          ) +
+          " ";
+        break;
+      case Z:
+        if (properties.useM140) {
+          validate(
+            arguments.length <= 1,
+            "Retracts for the Z-axis have to be specified separately by using the useM140 property."
+          );
+          writeBlock("L " + mFormat.format(140) + " MB MAX");
+          retracted = true; // specifies that the tool has been retracted to the safe plane
+          zOutput.reset();
+          return;
+        } else {
+          block +=
+            "Z" +
+            xyzFormat.format(machineConfiguration.getRetractPlane()) +
+            " ";
+          retracted = true; // specifies that the tool has been retracted to the safe plane
+          break;
+        }
+      default:
+        error(localize("Bad axis specified for writeRetract()."));
+        return;
     }
   }
   if (block) {
-    writeBlock("L " + block + "R0 FMAX " + mFormat.format(properties.useM92 ? 92 : 91));
+    writeBlock(
+      "L " + block + "R0 FMAX " + mFormat.format(properties.useM92 ? 92 : 91)
+    );
   }
   zOutput.reset();
+}
+
+function onPassThrough(text) {
+  var commands = String(text).split(",");
+  for (text in commands) {
+    writeBlock(commands[text]);
+  }
 }
 
 function onClose() {
