@@ -42,6 +42,7 @@ allowedCircularPlanes = undefined; // allow any circular motion
 properties = {
   writeMachine: false, // write machine
   writeTools: true, // writes the tools
+  measureTools: true, // measure all tools before program start
   writeVersion: false, // include version info
   usePlane: false, // uses PLANE if true and otherwise cycle 19
   useFunctionTCPM: false, // use FUNCTION TCPM instead of M128/M129
@@ -71,6 +72,12 @@ propertyDefinitions = {
     type: "boolean",
   },
   writeTools: {
+    title: "Write tool list",
+    description: "Output a tool list in the header of the code.",
+    group: 0,
+    type: "boolean",
+  },
+  measureTools: {
     title: "Write tool list",
     description: "Output a tool list in the header of the code.",
     group: 0,
@@ -526,6 +533,11 @@ function onOpen() {
         }
         if (tool.productId) {
           writeComment("    " + tool.productId);
+        }
+        if (getProperty("measureTools" && tool.number != 30)) {
+          var toolCallCommand = "TOOL CALL " + tool.number + " S3000"
+          writeBlock(toolCallCommand)
+          onCommand(COMMAND_TOOL_MEASURE)
         }
       }
       writeSeparator();
@@ -1517,7 +1529,7 @@ function onSection() {
       writeComment(tool.comment);
     }
 
-    onCommand(COMMAND_TOOL_MEASURE);
+    // onCommand(COMMAND_TOOL_MEASURE);
 
     if (properties.preloadTool) {
       var nextTool = getNextTool(tool.number);
@@ -5187,6 +5199,18 @@ function onCommand(command) {
       writeBlock("CALL PGM TNC:BLUM\\BLUM586");
       return;
     case COMMAND_TOOL_MEASURE:
+            //prepare machine to control, turn off coolant, stop spindle and retract z axis
+      setCoolant(COOLANT_OFF);
+      onCommand(COMMAND_STOP_SPINDLE);
+      writeRetract(Z);
+      // move A and B axis to 0 using CYCL 19
+      writeBlock("CYCL DEF 19.0 WORKING PLANE");
+      writeBlock("CYCL DEF 19.1 A+0 C+0");
+      writeBlock("L A+Q120 C+Q122 R0 FMAX");
+      // change machine parameter, to deactivate tilting - prevent 3D ROT error
+      writeBlock("FN 17: SYSWRITE ID210 NR6 = 0");
+      // call blum probe program saved in TNC
+      writeBlock("CALL PGM TNC:BLUM\\BLUM583");
       return;
   }
 
