@@ -534,10 +534,15 @@ function onOpen() {
         if (tool.productId) {
           writeComment("    " + tool.productId);
         }
-        if (getProperty("measureTools" && tool.number != 30)) {
-          var toolCallCommand = "TOOL CALL " + tool.number + " S3000"
-          writeBlock(toolCallCommand)
-          onCommand(COMMAND_TOOL_MEASURE)
+        if (getProperty("measureTools")) {
+          if (tool.number !== 30) {
+              var toolCallCommand = "TOOL CALL " + tool.number + " S3000"
+              writeBlock(toolCallCommand)
+              onCommand(COMMAND_TOOL_MEASURE)
+          }
+          else {
+            writeComment("Touch probe will not be measured")
+          }
         }
       }
       writeSeparator();
